@@ -547,7 +547,7 @@
     // 📲 CONFIGURACIÓN DE TUS DATOS REALES Y TELÉFONO DE WHATSAPP
     // ============================================================
     // Reemplazá el número entre comillas con tu teléfono real de WhatsApp (con código de país, sin '+' ni espacios)
-    const TELEFONO_WHATSAPP = "5491112345678"; 
+    const TELEFONO_WHATSAPP = "+541171122280"; 
 
     // LISTA DE CUENTAS BANCARIAS REALES
     const listaCuentas = [
@@ -610,7 +610,7 @@
     }
 
     let creditos = parseInt(localStorage.getItem('creditos_rutina_dias'));
-    if (isNaN(creditos)) creditos = 12; // Valor inicial por defecto de pase completo
+    if (isNaN(creditos)) creditos = 0; // Valor inicial por defecto de pase completo
 
     function actualizarCreditosUI() {
       const badge = document.getElementById('creditos-display');
@@ -936,7 +936,7 @@
     }
     
     function contactarWhatsApp() { 
-      window.open(`https://wa.me/${1171122280}?text=Hola!%20Envio%20comprobante%20para%20activar%20mi%20pase%20de%2012%20rutinas%20diarias`, "_blank"); 
+      window.open(`https://wa.me/${+541171122280}?text=Hola!%20Envio%20comprobante%20para%20activar%20mi%20pase%20de%2012%20rutinas%20diarias`, "_blank"); 
     }
 
     // Inicializamos interfaz con créditos guardados
