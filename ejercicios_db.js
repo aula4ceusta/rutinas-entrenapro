@@ -108,8 +108,8 @@ window.ejerciciosDB = [
     { id: "cr05", es: "Skipping bajo", mus: "cardio", eq: "body weight", tipo: "Aeróbico", pasos: "Trote rápido en el sitio levantando poco los pies." },
     { id: "cr06", es: "Sombra de boxeo", mus: "cardio", eq: "body weight", tipo: "Aeróbico", pasos: "Lance puñetazos al aire con desplazamientos laterales constantes." },
     { id: "cr07", es: "Salto a la comba (simulado)", mus: "cardio", eq: "body weight", tipo: "Aeróbico", pasos: "Saltos cortos rítmicos moviendo las muñecas." },
-    { id: "cr08", es: "Burpees con flexión", mus: "cardio", eq: "body weight", tipo: "Aeróbico", pasos: "Añada una flexión completa de pecho al burpee tradicional." }
-    /    // --- PECHO (Chest) --- (Continuación desde c19)
+    { id: "cr08", es: "Burpees con flexión", mus: "cardio", eq: "body weight", tipo: "Aeróbico", pasos: "Añada una flexión completa de pecho al burpee tradicional." },
+      // --- PECHO (Chest) --- (Continuación desde c19)
     { id: "c19", es: "Press de pecho en máquina Hammer", mus: "chest", eq: "gym", tipo: "Fuerza", pasos: "Empuje frontal sentado en máquina de palanca convergente." },
     { id: "c20", es: "Aperturas en Peck Deck (Mariposa)", mus: "chest", eq: "gym", tipo: "Fuerza", pasos: "Sentado, junte los brazos frente al pecho manteniendo una ligera flexión de codos." },
     { id: "c21", es: "Press de banca inclinado con barra", mus: "chest", eq: "barbell", tipo: "Fuerza", pasos: "En banco a 45°, baje la barra a la parte superior del pecho." },
