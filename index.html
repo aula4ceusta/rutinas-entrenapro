@@ -3,133 +3,228 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generador Inteligente de Rutinas Fitness | Pase 12 Días</title>
-  <!-- Base de datos de ejercicios externa -->
+  <title>Generador de Rutinas Diarias Fitness | Pase 12 Días</title>
+  
+  <!-- Carga de la Base de Datos Oficial de Ejercicios -->
   <script src="ejercicios_db.js"></script>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #0b0f19; color: #f1f5f9; padding: 20px; line-height: 1.5; }
-    .container { max-width: 900px; margin: 0 auto; }
-    header { text-align: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #1e293b; }
-    h1 { color: #38bdf8; font-size: 26px; margin-bottom: 8px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
-    p.subtitle { color: #94a3b8; font-size: 14px; }
-    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      padding: 20px;
+      min-height: 100vh;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .app-container { max-width: 1100px; margin: 0 auto; }
+
+    header { text-align: center; margin-bottom: 20px; }
+    header h1 { font-size: 28px; font-weight: 700; color: #ffffff; margin-bottom: 6px; }
+    header p { color: #94a3b8; font-size: 14px; }
+
+    /* BARRA DE MEMBRESÍA Y CRÉDITOS DIARIOS */
     .membresia-bar {
-      background: #1e293b;
-      border: 1px solid #334155;
-      padding: 12px 20px;
-      border-radius: 10px;
-      margin-bottom: 20px;
+      background: #151d2a;
+      border: 1px solid #38bdf8;
+      border-radius: 12px;
+      padding: 14px 20px;
+      margin-bottom: 25px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
       flex-wrap: wrap;
-      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       box-shadow: 0 4px 20px rgba(56, 189, 248, 0.1);
     }
+
     .creditos-info { font-size: 14px; color: #f1f5f9; display: flex; align-items: center; gap: 10px; }
     .creditos-badge {
       background: #0284c7;
-      color: #ffffff;
-      padding: 4px 12px;
+      color: #fff;
+      padding: 5px 12px;
       border-radius: 20px;
       font-weight: 700;
-      font-size: 13px;
+      font-size: 14px;
     }
-    .creditos-badge.cero { background: #dc2626; }
-    .btn-cargar {
+    .creditos-badge.cero {
+      background: #ef4444;
+    }
+
+    .btn-renovar {
       background: #eab308;
       color: #0b0f19;
       border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
-      font-size: 13px;
-      transition: all 0.2s;
+      transition: transform 0.2s, background 0.2s;
     }
-    .btn-cargar:hover { background: #facc15; transform: translateY(-1px); }
+    .btn-renovar:hover { background: #facc15; transform: translateY(-1px); }
 
-    .control-panel {
-      background: #1e293b;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 25px;
-      border: 1px solid #334155;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
+    /* CONFIGURADOR DE RUTINA DIARIA */
+    .configurador-panel {
+      background: #151d2a;
+      border: 1px solid #26334d;
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
-    .form-group { display: flex; flex-direction: column; gap: 6px; }
-    label { font-size: 12px; font-weight: 700; color: #94a3b8; text-transform: uppercase; }
-    select {
-      background: #0f172a;
-      color: #f8fafc;
-      border: 1px solid #334155;
-      padding: 10px 12px;
-      border-radius: 6px;
-      font-size: 14px;
-      outline: none;
-    }
-    select:focus { border-color: #38bdf8; }
-    
-    .btn-generar {
-      grid-column: 1 / -1;
-      background: #0284c7;
-      color: white;
-      border: none;
-      padding: 14px;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 800;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: background 0.2s;
-      margin-top: 5px;
-    }
-    .btn-generar:hover { background: #0369a1; }
 
-    .rutina-container { display: none; margin-top: 20px; }
-    .dia-bloque {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 25px;
-      user-select: none;
-    }
-    .dia-titulo { font-size: 18px; color: #38bdf8; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; border-bottom: 1px dashed #334155; padding-bottom: 8px; }
-    
-    .subbloque-titulo {
-      font-size: 14px;
-      font-weight: 800;
-      padding: 8px 12px;
-      border-radius: 6px;
-      margin: 15px 0 10px 0;
-      text-transform: uppercase;
-    }
-    .bloque-calentamiento { background: #334155; color: #f8fafc; }
-    .bloque-ronda1 { background: #1e3a8a; color: #93c5fd; }
-    .bloque-ronda2 { background: #312e81; color: #c7d2fe; }
-    .bloque-final { background: #064e3b; color: #a7f3d0; }
-
-    .item-ejercicio {
-      background: #0f172a;
-      border: 1px solid #334155;
-      padding: 12px 15px;
-      border-radius: 8px;
-      margin-bottom: 10px;
+    .configurador-panel h3 {
+      font-size: 18px;
+      color: #38bdf8;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 8px;
     }
-    .item-media { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; background: #1e293b; border: 1px solid #334155; flex-shrink: 0; }
-    .item-content { flex-grow: 1; }
-    .item-nombre { font-weight: 700; color: #f8fafc; font-size: 15px; }
+
+    .configurador-panel .subtitulo-panel {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 18px;
+    }
+
+    .grid-opciones {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .campo-opcion { display: flex; flex-direction: column; }
+    .campo-opcion label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #38bdf8; margin-bottom: 6px; }
+    .campo-opcion select {
+      background: #0b0f19;
+      color: #fff;
+      border: 1px solid #334155;
+      padding: 11px;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+    }
+    .campo-opcion select:focus { border-color: #38bdf8; }
+
+    .btn-generar-auto {
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-generar-auto:hover { background: #0369a1; transform: translateY(-1px); }
+
+    /* PANEL DE LA RUTINA GENERADA */
+    .rutina-panel {
+      background: #151d2a;
+      border: 2px solid #22c55e;
+      border-radius: 14px;
+      padding: 22px;
+      display: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .rutina-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #26334d;
+      padding-bottom: 12px;
+    }
+
+    .rutina-header h2 { font-size: 20px; color: #4ade80; }
+    .rutina-botones { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .btn-pdf {
+      background: #22c55e;
+      color: #0b0f19;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-pdf:hover { background: #4ade80; }
+
+    /* BLOQUES Y RONDAS DE LA RUTINA */
+    .dia-bloque {
+      background: #0b0f19;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .dia-titulo {
+      font-size: 18px;
+      color: #38bdf8;
+      font-weight: 700;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #151d2a;
+      padding-bottom: 8px;
+    }
+
+    .subbloque-titulo {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      border-radius: 6px;
+      display: block;
+      margin: 16px 0 12px 0;
+    }
+
+    .bloque-calentamiento { background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); }
+    .bloque-ronda1 { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .bloque-ronda2 { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+    .bloque-final { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+
+    .item-ejercicio {
+      background: #151d2a;
+      border: 1px solid #26334d;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .item-media {
+      width: 65px;
+      height: 65px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #0b0f19;
+      border: 1px solid #334155;
+    }
+
+    .item-content { flex: 1 1 250px; }
+    .item-nombre { font-size: 15px; font-weight: 700; color: #ffffff; }
     .item-detalle { font-size: 12px; color: #94a3b8; margin-top: 2px; }
-    .item-guia { font-size: 12px; color: #cbd5e1; margin-top: 4px; font-style: italic; }
-    .item-series { font-size: 13px; font-weight: 800; color: #38bdf8; background: #0284c720; padding: 6px 12px; border-radius: 6px; border: 1px solid #0284c740; text-align: center; flex-shrink: 0; }
+    .item-guia { font-size: 12px; color: #cbd5e1; margin-top: 5px; line-height: 1.35; }
+    .item-series { font-size: 13px; color: #4ade80; font-weight: 700; min-width: 140px; text-align: right; }
 
     /* ESTILO BLOQUEADO POR PAYWALL */
     .seccion-bloqueada {
@@ -137,16 +232,17 @@
       overflow: hidden;
       border-radius: 10px;
     }
-    .seccion-bloqueada .item-ejercicio,
-    .seccion-bloqueada .subbloque-titulo {
+
+    .seccion-bloqueada .item-ejercicio {
       filter: blur(5px);
-      opacity: 0.35;
+      opacity: 0.4;
       pointer-events: none;
     }
+
     .overlay-bloqueo {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(11, 15, 25, 0.88);
+      background: rgba(11, 15, 25, 0.85);
       backdrop-filter: blur(4px);
       display: flex;
       flex-direction: column;
@@ -156,261 +252,282 @@
       text-align: center;
       padding: 20px;
       cursor: pointer;
-      border: 2px dashed #eab308;
+      border: 1px dashed #eab308;
       border-radius: 10px;
     }
-    .overlay-bloqueo h4 { font-size: 17px; color: #eab308; margin-bottom: 6px; font-weight: 800; }
-    .overlay-bloqueo p { font-size: 13px; color: #cbd5e1; margin-bottom: 12px; max-width: 450px; }
+
+    .overlay-bloqueo h4 { font-size: 16px; color: #eab308; margin-bottom: 6px; }
+    .overlay-bloqueo p { font-size: 12px; color: #cbd5e1; margin-bottom: 12px; }
     .btn-desbloquear-inline {
       background: #eab308;
       color: #0b0f19;
       font-weight: 800;
       border: none;
-      padding: 10px 20px;
+      padding: 8px 16px;
       border-radius: 6px;
+      font-size: 12px;
       cursor: pointer;
-      font-size: 13px;
     }
 
-    .acciones-bar { display: flex; gap: 10px; margin-top: 20px; }
-    .btn-pdf {
-      background: #10b981;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-weight: 700;
-      cursor: pointer;
-      width: 100%;
-      font-size: 15px;
-    }
-    .btn-pdf:hover { background: #059669; }
-
-    /* MODAL DE PAGO */
-    .modal-overlay {
+    /* MODAL DE CHECKOUT */
+    .modal-pago {
+      display: none;
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      display: none;
-      justify-content: center;
-      align-items: center;
+      background: rgba(0,0,0,0.88);
+      justify-content: center; align-items: center;
       z-index: 1000;
-      padding: 15px;
     }
-    .modal-card {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 480px;
-      padding: 24px;
-      position: relative;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    }
-    .modal-close {
-      position: absolute;
-      top: 12px; right: 15px;
-      background: none; border: none;
-      color: #94a3b8; font-size: 20px;
-      cursor: pointer;
-    }
-    .modal-titulo { font-size: 18px; color: #eab308; font-weight: 800; margin-bottom: 10px; }
-    .modal-texto { font-size: 13px; color: #cbd5e1; margin-bottom: 15px; line-height: 1.4; }
-    .precio-badge { background: #0284c7; color: white; padding: 4px 10px; border-radius: 4px; font-weight: 800; }
-    
-    .btn-mp {
-      background: #009ee3;
-      color: white;
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 6px;
-      font-weight: 800;
-      font-size: 14px;
-      cursor: pointer;
-      margin-bottom: 12px;
-    }
-    .btn-mp:hover { background: #0081b8; }
 
-    .box-alias {
-      background: #0f172a;
-      border: 1px solid #334155;
+    .modal-contenido {
+      background: #151d2a;
+      border: 1px solid #38bdf8;
+      border-radius: 14px;
+      padding: 24px;
+      max-width: 500px; width: 92%;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-contenido h3 { font-size: 20px; color: #38bdf8; margin-bottom: 8px; }
+    .modal-contenido p { font-size: 13px; color: #cbd5e1; margin-bottom: 16px; line-height: 1.45; }
+
+    .btn-tarjeta {
+      background: #009ee3;
+      color: #fff;
+      border: none;
       padding: 12px;
       border-radius: 8px;
-      margin-bottom: 15px;
-    }
-    .alias-titulo { font-size: 12px; color: #94a3b8; font-weight: 700; margin-bottom: 8px; display: block; }
-    .select-cuenta {
+      font-weight: 700;
+      font-size: 14px;
       width: 100%;
-      padding: 8px;
-      background: #1e293b;
-      color: white;
-      border: 1px solid #334155;
-      border-radius: 6px;
-      font-size: 13px;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
     }
-    .alias-copiar-group { display: flex; gap: 8px; margin-top: 6px; }
+    .btn-tarjeta:hover { background: #0088c6; }
+
+    .box-alias {
+      background: #0b0f19;
+      border: 1px dashed #38bdf8;
+      border-radius: 10px;
+      padding: 14px;
+      text-align: left;
+      margin-bottom: 12px;
+    }
+
+    .alias-titulo { font-size: 12px; color: #38bdf8; font-weight: 700; display: block; margin-bottom: 6px; }
+
+    .select-cuenta {
+      background: #151d2a;
+      color: #fff;
+      border: 1px solid #334155;
+      padding: 8px;
+      border-radius: 6px;
+      width: 100%;
+      font-size: 12px;
+      margin-bottom: 10px;
+      outline: none;
+    }
+
+    .grid-copiar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
     .btn-copiar {
       background: #334155;
-      color: #f8fafc;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 4px;
-      font-size: 11px;
-      cursor: pointer;
-      flex-grow: 1;
-      font-weight: 600;
-    }
-    .btn-copiar:hover { background: #475569; }
-
-    .btn-wsp {
-      background: #25d366;
-      color: #0b0f19;
-      width: 100%;
-      padding: 10px;
-      border: none;
+      color: #38bdf8;
+      border: 1px solid #38bdf8;
+      padding: 7px;
       border-radius: 6px;
-      font-weight: 800;
-      font-size: 13px;
+      font-size: 11px;
+      font-weight: 700;
       cursor: pointer;
-      margin-bottom: 15px;
+      transition: background 0.2s;
     }
+    .btn-copiar:hover { background: #0284c7; color: #fff; }
 
     .box-codigo {
-      border-top: 1px solid #334155;
-      padding-top: 12px;
+      background: #0b0f19;
+      border: 1px solid #22c55e;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 12px;
+      text-align: left;
     }
-    .input-codigo-group { display: flex; gap: 8px; margin-top: 6px; }
+
+    .box-codigo .alias-titulo { color: #4ade80; }
+
+    .input-codigo-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
     .input-codigo-group input {
-      flex-grow: 1;
-      background: #0f172a;
+      background: #151d2a;
       border: 1px solid #334155;
-      color: white;
+      color: #4ade80;
       padding: 8px;
       border-radius: 6px;
-      outline: none;
       font-size: 13px;
+      font-weight: 700;
+      flex-grow: 1;
+      text-transform: uppercase;
+      outline: none;
     }
+
     .btn-activar {
-      background: #eab308;
+      background: #22c55e;
       color: #0b0f19;
       border: none;
       padding: 8px 14px;
       border-radius: 6px;
-      font-weight: 800;
-      cursor: pointer;
+      font-weight: 700;
       font-size: 12px;
+      cursor: pointer;
     }
 
+    .btn-wsp {
+      background: #25d366;
+      color: #0b0f19;
+      border: none;
+      padding: 11px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      width: 100%;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .btn-cerrar { background: transparent; color: #94a3b8; border: none; font-size: 13px; cursor: pointer; }
+
+    /* REGLAS DE IMPRESIÓN VECTORIAL LIMPIA EN HOJA BLANCA A4 */
     @media print {
-      body { background: white; color: black; padding: 0; }
-      .control-panel, .membresia-bar, .modal-overlay, .btn-pdf, header, .overlay-bloqueo, button { display: none !important; }
-      .dia-bloque { border: none; padding: 0; }
-      .item-ejercicio { background: white; border: 1px solid #ccc; color: black; }
-      .item-nombre { color: black; }
-      .item-detalle, .item-guia { color: #555; }
-      .seccion-bloqueada .item-ejercicio { filter: none !important; opacity: 1 !important; }
+      body { background: #ffffff !important; color: #000000 !important; padding: 0 !important; -webkit-user-select: auto; user-select: auto; }
+      header, .membresia-bar, .configurador-panel, .modal-pago, .btn-pdf, .overlay-bloqueo { display: none !important; }
+      .rutina-panel { background: #ffffff !important; border: none !important; display: block !important; padding: 0 !important; box-shadow: none !important; }
+      .rutina-header h2 { color: #000000 !important; border-bottom: 2px solid #000; }
+      .dia-bloque { background: #ffffff !important; border: 1px solid #ccc !important; color: #000 !important; }
+      .item-ejercicio { background: #f8fafc !important; border: 1px solid #ddd !important; color: #000 !important; filter: none !important; opacity: 1 !important; }
+      .item-nombre { color: #000000 !important; }
+      .item-detalle { color: #555555 !important; }
+      .item-series { color: #000000 !important; }
+      .item-media { display: none !important; }
+      .subbloque-titulo { background: #f1f5f9 !important; color: #000000 !important; border: 1px solid #ccc !important; }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
+  <div class="app-container">
     <header>
-      <h1>ENTRENA PRO</h1>
-      <p class="subtitle">Generador de Rutinas Diarias Personalizadas & Biomecánicas</p>
+      <h1>🏋️ Generador de Rutinas Diarias Fitness</h1>
+      <p>Pase de 12 Créditos = 12 Rutinas Personalizadas por Rondas de Fuerza, Pliometría y Core</p>
     </header>
 
+    <!-- BARRA DE MEMBRESÍA -->
     <div class="membresia-bar">
       <div class="creditos-info">
-        🎯 <span>Estado del Pase:</span>
-        <span class="creditos-badge cero" id="creditos-display">🔒 0 / 12 Días Disponibles (Pase Bloqueado)</span>
+        🎯 <span>Membresía Activa:</span>
+        <span class="creditos-badge" id="creditos-display">12 / 12 Días Disponibles</span>
       </div>
-      <button class="btn-cargar" onclick="abrirModalPago()">💳 Adquirir Pase ($15.000)</button>
+      <button class="btn-renovar" onclick="abrirModalPago()">💳 Cargar / Renovar Pase ($15.000)</button>
     </div>
 
-    <div class="control-panel">
-      <div class="form-group">
-        <label for="lugar">📍 Entorno de Entrenamiento</label>
-        <select id="lugar">
-          <option value="gimnasio">Gimnasio Completo (Máquinas/Pesas)</option>
-          <option value="casa">En Casa (Mancuernas / Peso Corporal)</option>
-          <option value="plaza">Plaza / Calistenia (Barra / Peso Corporal)</option>
-        </select>
-      </div>
+    <!-- CONFIGURADOR DE RUTINA -->
+    <div class="configurador-panel">
+      <h3>⚡ Armá tu Rutina para el Día de Hoy</h3>
+      <p class="subtitulo-panel">Seleccioná tu entorno, grupo muscular y método de combinación preferido.</p>
 
-      <div class="form-group">
-        <label for="enfoque-dia">🎯 Enfoque Muscular del Día</label>
-        <select id="enfoque-dia">
-          <option value="piernas">TREN INFERIOR (Piernas, Glúteos, Pantorrillas)</option>
-          <option value="empuje">EMPUJE (Pecho, Hombro, Tríceps)</option>
-          <option value="tiron">TIRÓN (Espalda, Bíceps, Hombro Posterior)</option>
-          <option value="core_hombros">HOMBROS Y CORE</option>
-          <option value="fullbody">FULLBODY (Cuerpo Completo)</option>
-        </select>
-      </div>
+      <div class="grid-opciones">
+        <div class="campo-opcion">
+          <label for="lugar">1. Lugar / Entorno</label>
+          <select id="lugar">
+            <option value="casa">Casa (Peso corporal / Mancuernas / Bandas)</option>
+            <option value="plaza">Plaza / Parque (Calistenia)</option>
+            <option value="gimnasio">Gimnasio Completo (Barras / Maquinaria / Poleas)</option>
+          </select>
+        </div>
 
-      <div class="form-group">
-        <label for="metodo-combo">⚙️ Método de Combinación</label>
-        <select id="metodo-combo">
-          <option value="rondas">Rondas Biomecánicas (Fuerza + Pliometría + Detalle)</option>
-          <option value="biseries">Biseries / Superseries Sinergistas (Mismo Grupo)</option>
-          <option value="hiit">Circuito HIIT / Quemagrasa por Tiempo (40s x 20s)</option>
-          <option value="piramidal">Carga Piramidal Pesada (12 - 10 - 8 - 6 reps)</option>
-        </select>
-      </div>
+        <div class="campo-opcion">
+          <label for="enfoque-dia">2. Grupo Muscular</label>
+          <select id="enfoque-dia">
+            <option value="empuje">Pecho, Hombro y Tríceps (Día de Empuje)</option>
+            <option value="tiron">Espalda, Bíceps y Hombro Posterior (Día de Tirón)</option>
+            <option value="piernas">Piernas, Glúteos y Pantorrillas (Tren Inferior)</option>
+            <option value="core_hombros">Hombros, Abdomen y Core</option>
+            <option value="fullbody">Fullbody / Cuerpo Completo</option>
+          </select>
+        </div>
 
-      <div class="form-group">
-        <label for="objetivo">💪 Objetivo Principal</label>
-        <select id="objetivo">
-          <option value="hipertrofia">Hipertrofia y Definición Muscular</option>
-          <option value="fuerza">Fuerza Máxima y Potencia</option>
-          <option value="resistencia">Resistencia & Quema de Grasa</option>
-        </select>
-      </div>
+        <div class="campo-opcion">
+          <label for="metodo-combo">3. Método de Combinación</label>
+          <select id="metodo-combo">
+            <option value="rondas">🎯 Rondas Biomecánicas (Fuerza + Pliometría + Core)</option>
+            <option value="biseries">⚡ Biseries / Superseries Sinergistas (Cero descanso)</option>
+            <option value="hiit">🔥 Circuito HIIT / Quemagrasa por Tiempo (40s x 20s)</option>
+            <option value="piramidal">🏋️ Carga Piramidal Pesada (Fuerza Tradicional 12-10-8-6)</option>
+          </select>
+        </div>
 
-      <button class="btn-generar" onclick="generarRutinaDiaria()">⚡ Generar Rutina del Día</button>
-    </div>
-
-    <div class="rutina-container" id="rutina-panel">
-      <div id="contenedor-bloques"></div>
-      <div class="acciones-bar">
-        <button class="btn-pdf" onclick="exportarPDFConCredito()">📄 Exportar o Imprimir Rutina en PDF</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL DE PAGO -->
-  <div class="modal-overlay" id="modal-pago">
-    <div class="modal-card">
-      <button class="modal-close" onclick="cerrarModalPago()">✕</button>
-      <div class="modal-titulo" id="modal-titulo">💳 Pase de 12 Rutinas Personalizadas</div>
-      <div class="modal-texto" id="modal-texto">
-        Obtené tu Pase completo por solo <span class="precio-badge">$15.000 ARS</span>. Incluye 12 generaciones completas de rutinas sin censura, acceso a todos los métodos y exportación a PDF.
-      </div>
-
-      <button class="btn-mp" onclick="pagarConTarjeta()">💳 Pagar con Tarjeta (Mercado Pago Directo)</button>
-
-      <div class="box-alias">
-        <span class="alias-titulo">📲 Transferencia Directa (CBU / CVU / Alias):</span>
-        <select id="select-cuenta" class="select-cuenta" onchange="cambiarCuenta()">
-          <option value="0">Mercado Pago (rmpc.mp)</option>
-          <option value="1">Brubank (rmpc.br)</option>
-          <option value="2">Personal Pay (rmpc.server)</option>
-          <option value="3">Claro Pay (rutinas.clpay)</option>
-        </select>
-        <div style="font-size:12px; margin-top:4px;"><strong>Banco:</strong> <span id="texto-banco">Mercado Pago</span></div>
-        <div style="font-size:12px;"><strong>Titular:</strong> <span id="texto-titular">Rodolfo German Pamelin</span></div>
-        <div style="font-size:12px;"><strong>Alias:</strong> <span id="texto-alias" style="color:#eab308; font-weight:700;">rmpc.mp</span></div>
-        <div style="font-size:12px;"><strong>CBU/CVU:</strong> <span id="texto-cbu" style="font-size:11px; color:#cbd5e1;">0000003100022063714580</span></div>
-        <div class="alias-copiar-group">
-          <button class="btn-copiar" onclick="copiarAlias()">📋 Copiar Alias</button>
-          <button class="btn-copiar" onclick="copiarCBU()">📋 Copiar CBU/CVU</button>
+        <div class="campo-opcion">
+          <label for="objetivo">4. Nivel e Intensidad</label>
+          <select id="objetivo">
+            <option value="hipertrofia">Hipertrofia y Combinado (8-12 reps)</option>
+            <option value="fuerza">Fuerza y Potencia Pliométrica (5-8 reps)</option>
+            <option value="resistencia">Resistencia y Quema de Grasa (12-15 reps)</option>
+          </select>
         </div>
       </div>
 
-      <button class="btn-wsp" onclick="contactarWhatsApp()">💬 Enviar Comprobante / WhatsApp Directo</button>
+      <button class="btn-generar-auto" onclick="generarRutinaDiaria()">⚡ Generar Rutina Estructurada (Consume 1 Crédito)</button>
+    </div>
+
+    <!-- PANEL DE LA RUTINA GENERADA -->
+    <div class="rutina-panel" id="rutina-panel">
+      <div class="rutina-header">
+        <h2 id="titulo-rutina">📋 Tu Plan de Entrenamiento de Hoy</h2>
+        <div class="rutina-botones">
+          <button class="btn-pdf" onclick="exportarPDFConCredito()">📄 Exportar Rutina del Día en PDF</button>
+        </div>
+      </div>
+      <div id="contenedor-bloques"></div>
+    </div>
+  </div>
+
+  <!-- MODAL DE CHECKOUT -->
+  <div id="modal-pago" class="modal-pago">
+    <div class="modal-contenido">
+      <h3 id="modal-titulo">🚀 Pase de 12 Rutinas Diarias ($15.000)</h3>
+      <p id="modal-texto">Obtené tu <strong>Pase de 12 Días de Entrenamiento ($15.000)</strong> pagando de forma 100% segura con Tarjeta de Crédito/Débito o Transferencia Directa.</p>
+      
+      <button class="btn-tarjeta" onclick="pagarConTarjeta()">💳 Pagar con Tarjeta (Mercado Pago)</button>
+
+      <div class="box-alias">
+        <span class="alias-titulo">📲 Transferencia CBU / CVU / Alias:</span>
+        <select id="select-cuenta" class="select-cuenta" onchange="cambiarCuenta()">
+          <option value="0">Mercado Pago - Rodolfo German Pamelin</option>
+          <option value="1">Brubank - Rodolfo German Pamelin</option>
+          <option value="2">Personal Pay - Daniela Fabiana Ortiz</option>
+          <option value="3">Claro Pay - Leonardo Javier Pamelin</option>
+        </select>
+        <div style="font-size:12px; margin-bottom:4px;"><strong>Banco / App:</strong> <span id="texto-banco">Mercado Pago</span></div>
+        <div style="font-size:12px; margin-bottom:4px;"><strong>Titular:</strong> <span id="texto-titular">Rodolfo German Pamelin</span></div>
+        <div style="font-size:12px; margin-bottom:4px;"><strong>Alias:</strong> <span id="texto-alias" style="color:#38bdf8; font-weight:700;">rmpc.mp</span></div>
+        <div style="font-size:12px;"><strong>CBU / CVU:</strong> <span id="texto-cbu" style="color:#4ade80; font-weight:700;">0000003100022063714580</span></div>
+        
+        <div class="grid-copiar">
+          <button class="btn-copiar" onclick="copiarAlias()">📋 Copiar Alias</button>
+          <button class="btn-copiar" onclick="copiarCBU()">💳 Copiar CBU/CVU</button>
+        </div>
+      </div>
 
       <div class="box-codigo">
         <span class="alias-titulo">🔑 ¿Ya compraste tu pase? Activalo con tu código:</span>
@@ -419,28 +536,60 @@
           <button class="btn-activar" onclick="activarCodigo()">Activar Pase</button>
         </div>
       </div>
+
+      <button class="btn-wsp" onclick="contactarWhatsApp()">💬 Enviar Comprobante / Asesoría WhatsApp</button>
+      <button class="btn-cerrar" onclick="cerrarModalPago()">Volver / Cerrar</button>
     </div>
   </div>
 
   <script>
-    const TELEFONO_WHATSAPP = "541171122280";
+    // ============================================================
+    // 📲 CONFIGURACIÓN DE TUS DATOS REALES Y TELÉFONO DE WHATSAPP
+    // ============================================================
+    // Reemplazá el número entre comillas con tu teléfono real de WhatsApp (con código de país, sin '+' ni espacios)
+    const TELEFONO_WHATSAPP = "541171122280"; 
 
+    // LISTA DE CUENTAS BANCARIAS REALES
     const listaCuentas = [
-      { banco: "Mercado Pago", titular: "Rodolfo German Pamelin", alias: "rmpc.mp", cbu: "0000003100022063714580" },
-      { banco: "Brubank", titular: "Rodolfo German Pamelin", alias: "rmpc.br", cbu: "143000171300270281001" },
-      { banco: "Personal Pay", titular: "Daniela Fabiana Ortiz", alias: "rmpc.server", cbu: "0000076500000053219158" },
-      { banco: "Claro Pay", titular: "Leonardo Javier Pamelin", alias: "rutinas.clpay", cbu: "0000085700203995465335" }
+      {
+        banco: "Mercado Pago",
+        titular: "Rodolfo German Pamelin",
+        alias: "rmpc.mp",
+        cbu: "0000003100022063714580"
+      },
+      {
+        banco: "Brubank",
+        titular: "Rodolfo German Pamelin",
+        alias: "rmpc.br",
+        cbu: "143000171300270281001"
+      },
+      {
+        banco: "Personal Pay",
+        titular: "Daniela Fabiana Ortiz",
+        alias: "rmpc.server",
+        cbu: "0000076500000053219158"
+      },
+      {
+        banco: "Claro Pay",
+        titular: "Leonardo Javier Pamelin",
+        alias: "rutinas.clpay",
+        cbu: "0000085700203995465335"
+      }
     ];
 
+    // BASE DE DATOS DE CALENTAMIENTO REAL Y CARDIO DINÁMICO
     const baseCalentamientoCardio = [
-      { id: "cal_01", name: "Jumping Jacks (Tijeras de salto)", category: "calentamiento", equipment: "body weight", target: "cardio_ligero", instructions: "Saltos coordinados abriendo y cerrando brazos y piernas a ritmo moderado.", repeticiones: "2 series x 45 segundos" },
-      { id: "cal_02", name: "Rotaciones Articulares & Movilidad Dinámica", category: "calentamiento", equipment: "body weight", target: "movilidad", instructions: "Círculos con hombros, rodillas y caderas para lubricar articulaciones.", repeticiones: "2 series x 10 rotaciones por lado" },
-      { id: "cal_03", name: "Skiping Bajo (Trote en el lugar)", category: "calentamiento", equipment: "body weight", target: "cardio_ligero", instructions: "Trote suave elevan ligeramente las rodillas sin golpear talones.", repeticiones: "2 series x 40 segundos" }
+      { id: "cal_01", name: "Jumping Jacks (Tijeras de salto)", category: "calentamiento", equipment: "body weight", target: "cardio_ligero", instructions: "Saltos coordinados abriendo y cerrando brazos y piernas a ritmo moderado e impulsando con la punta de los pies sin golpear talones.", repeticiones: "2 series x 45 segundos (Intensidad moderada)" },
+      { id: "cal_02", name: "Talón a la cola dinámico", category: "calentamiento", equipment: "body weight", target: "cardio_ligero", instructions: "Trote suave llevando de forma alternativa los talones hacia los glúteos para activar isquiotibiales y elevar la temperatura corporal.", repeticiones: "2 series x 40 segundos" },
+      { id: "cal_03", name: "Skipping suave / Trote en el lugar", category: "calentamiento", equipment: "body weight", target: "cardio_ligero", instructions: "Trote continuo en el sitio elevando rodillas a altura media con braceo fluido sin forzar la respiración.", repeticiones: "2 series x 45 segundos" },
+      { id: "cal_04", name: "Burpees guiados sin impacto / suaves", category: "calentamiento", equipment: "body weight", target: "cardio_movilidad", instructions: "Descendé las manos al suelo, llevá un pie y luego el otro atrás a posición de plancha, regresá paso a paso y de pie con extensión sin salto brusco.", repeticiones: "2 series x 10 repeticiones controladas" },
+      { id: "cal_05", name: "Movilidad articular amplia de Hombros y Caderas", category: "calentamiento", equipment: "body weight", target: "movilidad", instructions: "Círculos amplios y continuos hacia adelante y atrás con brazos, seguidos de rotaciones de cadera 90°-90°.", repeticiones: "2 series x 12 rotaciones por lado" }
     ];
 
+    // BASE DE DATOS DE VUELTA A LA CALMA Y REGENERATIVO
     const baseFinisherRegenerativo = [
-      { id: "fin_01", name: "Caminata Regenerativa & Respiración Guiada", category: "finisher", equipment: "body weight", target: "cardio_baja", instructions: "Caminata suave inhalando profundo en 4 segundos y exhalando en 6.", repeticiones: "3 minutos continuos" },
-      { id: "fin_02", name: "Estiramientos Estáticos Globales (Vuelta a la calma)", category: "finisher", equipment: "body weight", target: "flexibilidad", instructions: "Mantené cada estiramiento de piernas, torso y brazos por 20 segundos sin rebotar.", repeticiones: "2 minutos de flexibilidad" }
+      { id: "fin_01", name: "Caminata activa y Trote regenerativo muy suave", category: "finisher", equipment: "body weight", target: "recuperacion", instructions: "Caminata y trote a ritmo mínimo para descender la frecuencia cardíaca de forma paulatina y favorecer el retorno venoso.", repeticiones: "3 a 5 minutos continuos" },
+      { id: "fin_02", name: "Estiramiento estático guiado + Respiración diafragmática", category: "finisher", equipment: "body weight", target: "flexibilidad", instructions: "Estiramiento pasivo de los grupos musculares trabajados (pecho/espalda/piernas) manteniendo 20 segundos por posición e inhalando profundo.", repeticiones: "1 ronda completa (5 minutos)" }
     ];
 
     function obtenerDataset() {
@@ -448,23 +597,20 @@
         return window.ejerciciosDB;
       }
       return [
-        { id: "0001", name: "Flexiones de Pecho (Push-ups)", category: "chest", equipment: "body weight", target: "pectorals", instructions: "Manos al ancho de hombros. Bajá el cuerpo rígido controlando la bajada." },
-        { id: "0002", name: "Press de Banca Plano con Barra", category: "chest", equipment: "barbell", target: "pectorals", instructions: "Espalda apoyada en banco, bajá la barra al esternón y empujá." },
-        { id: "0003", name: "Dominadas Pronas (Pull-ups)", category: "back", equipment: "body weight", target: "lats", instructions: "Traccioná con dorsales hasta superar la barra con la barbilla." },
-        { id: "0005", name: "Sentadillas Libres Profundas", category: "upper legs", equipment: "body weight", target: "quadriceps", instructions: "Flexioná cadera y rodillas rompiendo los 90° con espalda erguida." },
-        { id: "0006", name: "Hip Thrust con Barra/Pesas", category: "gluteos", equipment: "barbell", target: "glutes", instructions: "Empujá con talones elevando cadera hasta apretar glúteos arriba." },
-        { id: "0007", name: "Sentadilla Hack", category: "upper legs", equipment: "machine", target: "quadriceps", instructions: "Espalda apoyada en respaldo inclinado, bajá a 90° y empujá con talones." },
-        { id: "0008", name: "Sentadillas Búlgaras con Mancuernas", category: "upper legs", equipment: "dumbbell", target: "quadriceps / glutes", instructions: "Un pie elevado atrás en banco. Bajá la rodilla trasera casi al suelo." },
-        { id: "0009", name: "Peso Muerto Rumano", category: "upper legs", equipment: "barbell", target: "hamstrings", instructions: "Llevá la cadera atrás con rodillas semi-flexionadas sintiendo tirón en isquios." },
-        { id: "0010", name: "Prensa de Piernas Inclinada 45°", category: "upper legs", equipment: "machine", target: "quadriceps", instructions: "Pies al ancho de hombros en plataforma. Bajá profundo a 90° sin descolgar cadera." },
-        { id: "0011", name: "Zancadas Caminando (Lunges)", category: "upper legs", equipment: "dumbbell", target: "quadriceps", instructions: "Pasos largos al frente manteniendo torso erguido." },
-        { id: "0012", name: "Sentadilla Sumo con Pesa", category: "upper legs", equipment: "dumbbell", target: "glutes / adductors", instructions: "Pies bien abiertos hacia afuera. Bajá vertical sintiendo trabajo en aductores y glúteos." },
-        { id: "0013", name: "Elevaciones de Talón para Pantorrillas", category: "lower legs", equipment: "body weight", target: "calves", instructions: "Subí a máxima extensión de tobillos sosteniendo 1 segundo arriba." }
+        { id: "0001", name: "Flexiones de Pecho (Push-ups)", category: "chest", equipment: "body weight", target: "pectorals", instructions: "Apoyá las manos a la anchura de los hombros. Mantené el cuerpo en plancha rígida y bajá flexionando codos a 45° antes de empujar." },
+        { id: "0002", name: "Press de Banca Plano con Barra", category: "chest", equipment: "barbell", target: "pectorals", instructions: "Tumbado en el banco, sujetá la barra con agarre ligeramente superior al ancho de hombros. Bajá al esternón de forma guiada y empujá con potencia." },
+        { id: "0003", name: "Dominadas Pronas (Pull-ups)", category: "back", equipment: "body weight", target: "lats", instructions: "Agarre prono en barra. Traccioná con los dorsales elevando el cuerpo hasta superar la barra con la barbilla." },
+        { id: "0004", name: "Remo Unilateral con Mancuerna", category: "back", equipment: "dumbbell", target: "upper back", instructions: "Apoyá rodilla y mano en banco. Jalá la mancuerna hacia la cadera enfocando la contracción en la espalda." },
+        { id: "0005", name: "Sentadillas Libres Profundas", category: "upper legs", equipment: "body weight", target: "quadriceps", instructions: "Pies al ancho de hombros. Flexioná cadera y rodillas bajando erguido hasta romper los 90°." },
+        { id: "0006", name: "Hip Thrust con Barra/Mancuerna", category: "gluteos", equipment: "barbell", target: "glutes", instructions: "Espalda alta apoyada en banco. Elevá la cadera empujando con talones hasta apretar glúteos 2 segundos arriba." },
+        { id: "0007", name: "Press Militar de Hombros", category: "shoulders", equipment: "dumbbell", target: "deltoids", instructions: "Con la columna erguida, empujá las mancuernas desde la altura de las orejas hacia arriba." },
+        { id: "0008", name: "Curl de Bíceps Alterno", category: "upper arms", equipment: "dumbbell", target: "biceps", instructions: "Codos pegados al cuerpo, flexioná el antebrazo sin mecer el torso." },
+        { id: "0009", name: "Plancha Isométrica Abdominal", category: "waist", equipment: "body weight", target: "abs", instructions: "Antebrazos y puntas de pie. Mantené la postura alineada apretando fuertemente el core." }
       ];
     }
 
     let creditos = parseInt(localStorage.getItem('creditos_rutina_dias'));
-    if (isNaN(creditos)) creditos = 0; // Inicio bloqueado para usuarios nuevos
+    if (isNaN(creditos)) creditos = 0; // Valor inicial por defecto de pase completo
 
     function actualizarCreditosUI() {
       const badge = document.getElementById('creditos-display');
@@ -472,7 +618,7 @@
         badge.innerText = `🔒 0 / 12 Días Disponibles (Pase Bloqueado)`;
         badge.classList.add('cero');
       } else {
-        badge.innerText = `🎯 ${creditos} / 12 Días Disponibles`;
+        badge.innerText = `${creditos} / 12 Días Disponibles`;
         badge.classList.remove('cero');
       }
       localStorage.setItem('creditos_rutina_dias', creditos);
@@ -492,91 +638,37 @@
       });
     }
 
+    function seleccionarAleatorio(lista, cantidad) {
+      if (!lista || lista.length === 0) return [];
+      const copia = [...lista];
+      const resultado = [];
+      while (resultado.length < cantidad && copia.length > 0) {
+        const idx = Math.floor(Math.random() * copia.length);
+        const [extraido] = copia.splice(idx, 1);
+        if (extraido) resultado.push(extraido);
+      }
+      return resultado;
+    }
+
     function obtenerNombre(ej) {
       if (!ej) return "Ejercicio de Entrenamiento";
       return ej.nombre || ej.name || "Ejercicio Personalizado";
     }
 
-    function esMismoEjercicio(a, b) {
-      if (!a || !b) return false;
-      const nameA = obtenerNombre(a).trim().toLowerCase();
-      const nameB = obtenerNombre(b).trim().toLowerCase();
-      if (nameA && nameB && nameA === nameB) return true;
-      if (a.id && b.id && String(a.id) === String(b.id)) return true;
-      return false;
-    }
-
-    function seleccionarSinRepetir(pool, cantidad, yaUsados) {
-      if (!pool || pool.length === 0) return [];
-      let candidatos = pool.filter(e => !yaUsados.some(u => esMismoEjercicio(e, u)));
-      let seleccionados = [];
-      let copia = [...candidatos];
-      while (seleccionados.length < cantidad && copia.length > 0) {
-        const idx = Math.floor(Math.random() * copia.length);
-        const [extraido] = copia.splice(idx, 1);
-        if (extraido) {
-          seleccionados.push(extraido);
-          yaUsados.push(extraido);
-        }
-      }
-      if (seleccionados.length < cantidad) {
-        let copiaBackup = pool.filter(e => !seleccionados.some(s => esMismoEjercicio(e, s)));
-        while (seleccionados.length < cantidad && copiaBackup.length > 0) {
-          const idx = Math.floor(Math.random() * copiaBackup.length);
-          const [extraido] = copiaBackup.splice(idx, 1);
-          if (extraido) {
-            seleccionados.push(extraido);
-            yaUsados.push(extraido);
-          }
-        }
-      }
-      return seleccionados;
-    }
-
-    function esEjercicioLeg(ej) {
-      if (!ej) return false;
-      const cat = String(ej.category || ej.musculo || "").toLowerCase();
-      const target = String(ej.target || "").toLowerCase();
-      const name = String(ej.name || ej.nombre || "").toLowerCase();
-      return cat.includes("leg") || cat.includes("glute") || target.includes("quad") || target.includes("glute") || target.includes("hamstring") || target.includes("calf") || name.includes("sentadilla") || name.includes("estocada") || name.includes("zancada") || name.includes("rumano") || name.includes("hack") || name.includes("sumo") || name.includes("hip thrust") || name.includes("prensa") || name.includes("búlgara") || name.includes("bulgara") || name.includes("pantorrilla") || name.includes("femoral") || name.includes("cuádriceps");
-    }
-
-    function esEjercicioPush(ej) {
-      if (!ej) return false;
-      const cat = String(ej.category || ej.musculo || "").toLowerCase();
-      const target = String(ej.target || "").toLowerCase();
-      const name = String(ej.name || ej.nombre || "").toLowerCase();
-      return cat.includes("chest") || cat.includes("shoulder") || target.includes("pectoral") || target.includes("deltoid") || target.includes("triceps") || name.includes("press") || name.includes("flexion") || name.includes("fondo");
-    }
-
-    function esEjercicioPull(ej) {
-      if (!ej) return false;
-      const cat = String(ej.category || ej.musculo || "").toLowerCase();
-      const target = String(ej.target || "").toLowerCase();
-      const name = String(ej.name || ej.nombre || "").toLowerCase();
-      return cat.includes("back") || target.includes("lat") || target.includes("biceps") || target.includes("back") || target.includes("trap") || name.includes("remo") || name.includes("dominada") || name.includes("jalón") || name.includes("curl");
-    }
-
-    function esEjercicioCore(ej) {
-      if (!ej) return false;
-      const cat = String(ej.category || ej.musculo || "").toLowerCase();
-      const target = String(ej.target || "").toLowerCase();
-      const name = String(ej.name || ej.nombre || "").toLowerCase();
-      return cat.includes("waist") || target.includes("abs") || target.includes("oblique") || target.includes("core") || name.includes("plancha") || name.includes("crunch");
-    }
-
     function obtenerInstruccion(ej) {
-      if (!ej) return "Ejecución técnica guiada con rango completo de movimiento.";
+      if (!ej) return "Ejecución técnica guiada de forma controlada.";
       if (ej.instructions) {
         if (typeof ej.instructions === 'string') return ej.instructions;
-        if (ej.instructions.es) return Array.isArray(ej.instructions.es) ? ej.instructions.es.join(" ") : ej.instructions.es;
+        if (ej.instructions.es) {
+          return Array.isArray(ej.instructions.es) ? ej.instructions.es.join(" ") : ej.instructions.es;
+        }
         if (Array.isArray(ej.instructions)) return ej.instructions.join(" ");
       }
       if (ej.instrucciones) {
         if (typeof ej.instrucciones === 'string') return ej.instrucciones;
         if (ej.instrucciones.es) return ej.instrucciones.es;
       }
-      return "Técnica estricta manteniendo control en la bajada y subida.";
+      return "Técnica estricta alineando columna y controlando la fase excéntrica y concéntrica.";
     }
 
     function obtenerCategoria(ej) {
@@ -594,14 +686,16 @@
     function obtenerImagen(ej) {
       if (!ej) return "";
       if (ej.image) return ej.image;
-      if (ej.images && ej.images.length > 0) return `data/${ej.images[0]}`;
+      if (ej.images && ej.images.length > 0) return `data/${ej.images}`;
       return "";
     }
 
+    // ESTRUCTURA BIOMECÁNICA PRINCIPAL CON MÉTODOS Y PROTECCIÓN DE CRÉDITOS
     function generarRutinaDiaria() {
       let estaBloqueado = false;
 
       if (creditos <= 0) {
+        // MODO VISTA PREVIA GRATUITA CON CENSURA VISUAL (CANDADO)
         estaBloqueado = true;
       } else {
         const confirmar = confirm(`⚡ Generar esta rutina consumirá 1 crédito de tu pase (Te quedan ${creditos} disponibles). ¿Deseas continuar?`);
@@ -616,29 +710,58 @@
       const metodoCombo = document.getElementById("metodo-combo").value;
       const objetivo = document.getElementById("objetivo").value;
 
-      const todoDataset = obtenerDataset();
-      const aptosLugar = filtrarPorEquipamiento(lugar);
+      const aptos = filtrarPorEquipamiento(lugar);
       const contenedor = document.getElementById("contenedor-bloques");
       contenedor.innerHTML = "";
 
-      let poolPrincipal = [];
-      if (enfoqueDia === "piernas") {
-        poolPrincipal = aptosLugar.filter(esEjercicioLeg);
-        if (poolPrincipal.length < 6) poolPrincipal = todoDataset.filter(esEjercicioLeg);
-      } else if (enfoqueDia === "empuje") {
-        poolPrincipal = aptosLugar.filter(esEjercicioPush);
-        if (poolPrincipal.length < 6) poolPrincipal = todoDataset.filter(esEjercicioPush);
-      } else if (enfoqueDia === "tiron") {
-        poolPrincipal = aptosLugar.filter(esEjercicioPull);
-        if (poolPrincipal.length < 6) poolPrincipal = todoDataset.filter(esEjercicioPull);
-      } else if (enfoqueDia === "core_hombros") {
-        poolPrincipal = aptosLugar.filter(e => esEjercicioPush(e) || esEjercicioCore(e));
-        if (poolPrincipal.length < 6) poolPrincipal = todoDataset.filter(e => esEjercicioPush(e) || esEjercicioCore(e));
-      } else {
-        poolPrincipal = aptosLugar;
+      // Filtro por grupos musculares estricto
+      let prinAptos = aptos.filter(e => {
+        const c = String(e.category || e.musculo || "").toLowerCase();
+        const t = String(e.target || "").toLowerCase();
+        const n = String(e.name || e.nombre || "").toLowerCase();
+
+        if (enfoqueDia === "empuje") {
+          return c.includes("chest") || c.includes("shoulder") || c.includes("pecho") || c.includes("hombro") || t.includes("triceps") || t.includes("pectorals") || t.includes("delts");
+        } else if (enfoqueDia === "tiron") {
+          return c.includes("back") || c.includes("arm") || c.includes("espalda") || c.includes("brazo") || t.includes("lats") || t.includes("biceps") || t.includes("traps");
+        } else if (enfoqueDia === "piernas") {
+          return c.includes("leg") || c.includes("glute") || c.includes("pierna") || c.includes("gluteo") || t.includes("quad") || t.includes("glute") || t.includes("hamstring") || t.includes("calf") || n.includes("sentadilla") || n.includes("estocada") || n.includes("zancada") || n.includes("rumano") || n.includes("hack") || n.includes("sumo") || n.includes("hip thrust") || n.includes("prensa") || n.includes("búlgara") || n.includes("bulgara") || n.includes("pantorrilla") || n.includes("femoral") || n.includes("cuádriceps");
+        } else if (enfoqueDia === "core_hombros") {
+          return c.includes("waist") || c.includes("shoulder") || c.includes("abdomen") || c.includes("hombro") || t.includes("abs") || t.includes("delts");
+        } else {
+          return true;
+        }
+      });
+
+      let coreAptos = aptos.filter(e => {
+        const c = String(e.category || e.musculo || "").toLowerCase();
+        const t = String(e.target || "").toLowerCase();
+        return c.includes("waist") || c.includes("abdomen") || t.includes("abs");
+      });
+
+      if (prinAptos.length < 6) {
+        // Fallback al dataset completo para ese grupo sin tocar otros grupos musculares
+        const todoData = obtenerDataset();
+        prinAptos = todoData.filter(e => {
+          const c = String(e.category || e.musculo || "").toLowerCase();
+          const t = String(e.target || "").toLowerCase();
+          const n = String(e.name || e.nombre || "").toLowerCase();
+          if (enfoqueDia === "empuje") return c.includes("chest") || c.includes("shoulder") || c.includes("pecho") || c.includes("hombro") || t.includes("triceps") || t.includes("pectorals") || t.includes("delts");
+          if (enfoqueDia === "tiron") return c.includes("back") || c.includes("arm") || c.includes("espalda") || c.includes("brazo") || t.includes("lats") || t.includes("biceps") || t.includes("traps");
+          if (enfoqueDia === "piernas") return c.includes("leg") || c.includes("glute") || c.includes("pierna") || c.includes("gluteo") || t.includes("quad") || t.includes("glute") || t.includes("hamstring") || t.includes("calf") || n.includes("sentadilla") || n.includes("estocada") || n.includes("zancada") || n.includes("rumano") || n.includes("hack") || n.includes("sumo") || n.includes("hip thrust") || n.includes("prensa") || n.includes("búlgara") || n.includes("bulgara") || n.includes("pantorrilla") || n.includes("femoral") || n.includes("cuádriceps");
+          if (enfoqueDia === "core_hombros") return c.includes("waist") || c.includes("shoulder") || c.includes("abdomen") || c.includes("hombro") || t.includes("abs") || t.includes("delts");
+          return true;
+        });
       }
 
-      let yaUsados = [];
+      if (coreAptos.length === 0) {
+        const todoData = obtenerDataset();
+        coreAptos = todoData.filter(e => {
+          const c = String(e.category || e.musculo || "").toLowerCase();
+          const t = String(e.target || "").toLowerCase();
+          return c.includes("waist") || c.includes("abdomen") || t.includes("abs");
+        });
+      }
 
       const diaBox = document.createElement("div");
       diaBox.className = "dia-bloque";
@@ -652,15 +775,15 @@
       };
 
       const nombresMetodo = {
-        rondas: "Rondas Biomecánicas (Fuerza + Pliometría + Detalle)",
-        biseries: "Biseries / Superseries Sinergistas (Mismo Grupo)",
+        rondas: "Rondas Biomecánicas (Fuerza + Pliometría + Core)",
+        biseries: "Biseries / Superseries Sinergistas",
         hiit: "Circuito HIIT / Quemagrasa por Tiempo (40s x 20s)",
-        piramidal: "Carga Piramidal Pesada (12 - 10 - 8 - 6 reps)"
+        piramidal: "Carga Piramidal Pesada (12-10-8-6 reps)"
       };
 
       let htmlBloque = `<div class="dia-titulo">🗓️ RUTINA DEL DÍA: ${nombresEnfoque[enfoqueDia]}</div>`;
       htmlBloque += `<div style="font-size:12px; color:#38bdf8; margin-bottom:12px; font-weight:700;">⚙️ Método Activo: ${nombresMetodo[metodoCombo]} - (${lugar.toUpperCase()})</div>`;
-      
+
       if (estaBloqueado) {
         htmlBloque += `
           <div style="background:#451a03; border:1px solid #f59e0b; color:#fef3c7; padding:12px 16px; border-radius:10px; margin-bottom:16px; font-size:13px; font-weight:600; text-align:center; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px;">
@@ -670,9 +793,9 @@
         `;
       }
 
-      // FASE 1: CALENTAMIENTO
+      // 1. FASE 1: CALENTAMIENTO DINÁMICO Y CARDIO MODERADO (SIEMPRE VISIBLE)
       htmlBloque += `<div class="subbloque-titulo bloque-calentamiento">🔥 FASE 1: Calentamiento Dinámico & Activación Cardio (Intensidad Moderada - 10 min)</div>`;
-      const calSeleccionados = seleccionarSinRepetir(baseCalentamientoCardio, 3, yaUsados);
+      const calSeleccionados = seleccionarAleatorio(baseCalentamientoCardio, 3);
       calSeleccionados.forEach(ej => {
         htmlBloque += `
           <div class="item-ejercicio">
@@ -686,6 +809,7 @@
         `;
       });
 
+      // CONTENEDOR DE LA FASE 2 Y FASE 3 (CON CANDADO SI CORRESPONDE)
       if (estaBloqueado) {
         htmlBloque += `<div class="seccion-bloqueada">`;
         htmlBloque += `
@@ -697,20 +821,21 @@
         `;
       }
 
-      // FASE 2 - RONDA 1
-      let tituloRonda1 = `🏋️ FASE 2 - RONDA 1: Fuerza Base y Potencia Dinámica (${nombresEnfoque[enfoqueDia]})`;
-      if (metodoCombo === "biseries") tituloRonda1 = `⚡ FASE 2 - RONDA 1: Biserie / Superserie Sinergista de ${nombresEnfoque[enfoqueDia]}`;
-      if (metodoCombo === "hiit") tituloRonda1 = `🔥 FASE 2 - RONDA 1: Circuito HIIT de ${nombresEnfoque[enfoqueDia]} (40s x 20s)`;
-      if (metodoCombo === "piramidal") tituloRonda1 = `🏋️ FASE 2 - RONDA 1: Piramidal Pesado de ${nombresEnfoque[enfoqueDia]} (12-10-8-6 reps)`;
+      // 2. FASE 2 - RONDA 1: COMBINADO DE FUERZA Y PLIOMETRÍA (3 EJERCICIOS)
+      let tituloRonda1 = "🏋️ FASE 2 - RONDA 1: Triserie de Fuerza Base y Potencia Pliométrica (3 a 4 Series)";
+      if (metodoCombo === "biseries") tituloRonda1 = "⚡ FASE 2 - RONDA 1: Biseries / Superseries de Pecho/Espalda y Fuerza Explosiva";
+      if (metodoCombo === "hiit") tituloRonda1 = "🔥 FASE 2 - RONDA 1: Circuito HIIT Estaciones de Fuerza (40s Trabajo x 20s Pausa)";
+      if (metodoCombo === "piramidal") tituloRonda1 = "🏋️ FASE 2 - RONDA 1: Piramidal de Carga Progresiva (Series x 12 - 10 - 8 - 6 reps)";
 
       htmlBloque += `<div class="subbloque-titulo bloque-ronda1">${tituloRonda1}</div>`;
-      const ronda1Ejercicios = seleccionarSinRepetir(poolPrincipal, 3, yaUsados);
+      const ronda1Ejercicios = seleccionarAleatorio(prinAptos, 3);
       ronda1Ejercicios.forEach((ej, index) => {
         const imgUrl = obtenerImagen(ej);
-        let rolStr = (index === 0) ? "1. Fuerza Compuesta Principal" : ((index === 1) ? "2. Potencia / Unilateral" : "3. Trabajo Complementario");
-        let seriesReps = (index === 0) ? "3-4 series x 8-10 reps" : ((index === 1) ? "3-4 series x 10-12 reps" : "3 series x 12 reps");
-        if (metodoCombo === "hiit") seriesReps = "40s trabajo x 20s descanso (4 Rondas)";
-        if (metodoCombo === "piramidal") seriesReps = "4 series (12 - 10 - 8 - 6 reps)";
+        let rolStr = (index === 0) ? "1. Fuerza Compuesta Principal" : ((index === 1) ? "2. Pliometría / Potencia Dinámica" : "3. Trabajo Complementario");
+        let seriesReps = (index === 0) ? "3-4 series x 8-10 reps (Pausa 60s)" : ((index === 1) ? "3-4 series x 10-12 reps explosivas" : "3 series x 12 reps con control");
+
+        if (metodoCombo === "hiit") seriesReps = "40 seg trabajo x 20 seg descanso (4 Rondas)";
+        if (metodoCombo === "piramidal") seriesReps = "4 series (12 - 10 - 8 - 6 reps subiendo carga)";
 
         htmlBloque += `
           <div class="item-ejercicio">
@@ -725,19 +850,24 @@
         `;
       });
 
-      // FASE 2 - RONDA 2 (EXCLUYE TODOS LOS EJERCICIOS DE RONDA 1 Y FASE 1)
-      let tituloRonda2 = `⚡ FASE 2 - RONDA 2: Aislamiento y Enfoque Analítico (${nombresEnfoque[enfoqueDia]})`;
-      if (metodoCombo === "biseries") tituloRonda2 = `⚡ FASE 2 - RONDA 2: Biserie 2 de Aislamiento de ${nombresEnfoque[enfoqueDia]}`;
-      if (metodoCombo === "hiit") tituloRonda2 = `🔥 FASE 2 - RONDA 2: Circuito HIIT Metabólico de ${nombresEnfoque[enfoqueDia]}`;
-      if (metodoCombo === "piramidal") tituloRonda2 = `🏋️ FASE 2 - RONDA 2: Piramidal de Aislamiento e Hipertrofia`;
+      // 3. FASE 2 - RONDA 2: COMBINADO DE ENFOQUE ANALÍTICO Y CORE DINÁMICO (3 EJERCICIOS SIN REPETIR RONDA 1)
+      const idsRonda1 = new Set(ronda1Ejercicios.map(e => String(e.name || e.nombre || e.id).toLowerCase()));
+      let prinAptosRonda2 = prinAptos.filter(e => !idsRonda1.has(String(e.name || e.nombre || e.id).toLowerCase()));
+      if (prinAptosRonda2.length < 2) prinAptosRonda2 = prinAptos;
+
+      let tituloRonda2 = "⚡ FASE 2 - RONDA 2: Triserie de Aislamiento y Estabilidad de Core (3 Series)";
+      if (metodoCombo === "biseries") tituloRonda2 = "⚡ FASE 2 - RONDA 2: Biseries Analíticas de Aislamiento + Core Isométrico";
+      if (metodoCombo === "hiit") tituloRonda2 = "🔥 FASE 2 - RONDA 2: Circuito HIIT Metabólico de Core y Resistencia";
+      if (metodoCombo === "piramidal") tituloRonda2 = "🏋️ FASE 2 - RONDA 2: Piramidal de Aislamiento e Hipertrofia Estricta";
 
       htmlBloque += `<div class="subbloque-titulo bloque-ronda2">${tituloRonda2}</div>`;
-      const ronda2Ejercicios = seleccionarSinRepetir(poolPrincipal, 3, yaUsados);
+      const ronda2Ejercicios = [...seleccionarAleatorio(prinAptosRonda2, 2), ...seleccionarAleatorio(coreAptos, 1)];
       ronda2Ejercicios.forEach((ej, index) => {
         const imgUrl = obtenerImagen(ej);
-        let rolStr = (index === 0) ? "1. Aislamiento / Enfocado" : ((index === 1) ? "2. Agilidad / Unilateral" : "3. Detalle Muscular");
-        let seriesReps = "3 series x 12-15 reps";
-        if (metodoCombo === "hiit") seriesReps = "40s trabajo x 20s descanso (3 Rondas)";
+        let rolStr = (index === 0) ? "1. Aislamiento / Acondicionamiento" : ((index === 1) ? "2. Agilidad / Fuerza Unilateral" : "3. Núcleo & Estabilidad (Core)");
+        let seriesReps = (index === 2) ? "3 series x 15-20 reps o 45s isométrica" : "3 series x 12-15 reps (Tensión constante)";
+
+        if (metodoCombo === "hiit") seriesReps = "40 seg trabajo x 20 seg descanso (3 Rondas)";
 
         htmlBloque += `
           <div class="item-ejercicio">
@@ -752,14 +882,14 @@
         `;
       });
 
-      // FASE 3: FINISHER
-      htmlBloque += `<div class="subbloque-titulo bloque-final">🧘 FASE 3: Finisher Aeróbico & Vuelta a la Calma (5 min)</div>`;
+      // 4. FASE 3: FINISHER AERÓBICO Y REGENERATIVO
+      htmlBloque += `<div class="subbloque-titulo bloque-final">🧘 FASE 3: Finisher Aeróbico & Vuelta a la Calma Regenerativa (5 min)</div>`;
       baseFinisherRegenerativo.forEach(ej => {
         htmlBloque += `
           <div class="item-ejercicio">
             <div class="item-content">
               <div class="item-nombre">${ej.name}</div>
-              <div class="item-detalle">Enfoque: VUELTA A LA CALMA</div>
+              <div class="item-detalle">Enfoque: VUELTA A LA CALMA REGENERATIVA</div>
               <div class="item-guia">${ej.instructions}</div>
             </div>
             <div class="item-series">${ej.repeticiones}</div>
@@ -768,7 +898,7 @@
       });
 
       if (estaBloqueado) {
-        htmlBloque += `</div>`;
+        htmlBloque += `</div>`; // Cierra seccion-bloqueada
       }
 
       diaBox.innerHTML = htmlBloque;
@@ -776,18 +906,17 @@
 
       document.getElementById("rutina-panel").style.display = "block";
       document.getElementById("rutina-panel").scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function exportarPDFConCredito() {
+    }function exportarPDFConCredito() {
       if (creditos <= 0) {
         document.getElementById('modal-titulo').innerText = "⚠️ Agotaste tus 12 Días de Rutina";
-        document.getElementById('modal-texto').innerHTML = "Llegaste al límite de tu pase. Cargá <strong>$15.000</strong> para renovar o contactanos por WhatsApp.";
+        document.getElementById('modal-texto').innerHTML = "Llegaste al límite de tu pase de 12 días. Cargá <strong>$15.000</strong> para renovar o contactanos por WhatsApp.";
         abrirModalPago();
         return;
       }
       window.print();
     }
 
+    // FUNCIONES DEL MODAL DE COBRO Y CUENTAS BANCARIAS
     function cambiarCuenta() {
       const idx = document.getElementById("select-cuenta").value;
       const c = listaCuentas[idx];
@@ -807,40 +936,43 @@
       navigator.clipboard.writeText(cbu).then(() => { alert("¡CBU/CVU copiado al portapapeles!: " + cbu); });
     }
 
-    const CODIGOS_VALIDOS_OFICIALES = ["EP-2971", "EP-6254", "EP-9253", "EP-9405", "EP-2701", "EP-4678", "EP-7911", "EP-9062", "EP-8246", "EP-4951", "EP-1061", "EP-2342", "EP-2834", "EP-5726", "EP-2626", "EP-8387", "EP-1208", "EP-9052", "EP-6168", "EP-4464", "EP-7528", "EP-5140", "EP-6716", "EP-6863", "EP-7186", "EP-9434", "EP-2270", "EP-6597", "EP-2489", "EP-9835", "EP-5806", "EP-5732", "EP-8514", "EP-3328", "EP-6082", "EP-1425", "EP-7063", "EP-6976", "EP-8574", "EP-7937", "EP-2505", "EP-7553", "EP-9186", "EP-2927", "EP-7990", "EP-9316", "EP-9065", "EP-7543", "EP-9615", "EP-5257"];
-
-    function obtenerCodigosUsados() {
-      try {
-        return JSON.parse(localStorage.getItem('codigos_usados_registrados')) || [];
-      } catch(e) {
-        return [];
-      }
-    }
+    const CODIGOS_VALIDOS_OFICIALES = [
+      "EP-2971", "EP-6254", "EP-9253", "EP-9405", "EP-2701",
+      "EP-4678", "EP-7911", "EP-9062", "EP-8246", "EP-4951",
+      "EP-1061", "EP-2342", "EP-2834", "EP-5726", "EP-2626",
+      "EP-8387", "EP-1208", "EP-9052", "EP-6168", "EP-4464",
+      "EP-7528", "EP-5140", "EP-6716", "EP-6863", "EP-7186",
+      "EP-9434", "EP-2270", "EP-6597", "EP-2489", "EP-9835",
+      "EP-5806", "EP-5732", "EP-8514", "EP-3328", "EP-6082",
+      "EP-1425", "EP-7063", "EP-6976", "EP-8574", "EP-7937",
+      "EP-2505", "EP-7553", "EP-9186", "EP-2927", "EP-7990",
+      "EP-9316", "EP-9065", "EP-7543", "EP-9615", "EP-5257"
+    ];
 
     function activarCodigo() {
       const cod = document.getElementById("input-codigo").value.trim().toUpperCase();
       if (!cod) {
-        alert("Por favor, ingresá un código de acceso válido.");
+        alert("Ingresá un código válido.");
         return;
       }
 
-      const codigosUsados = obtenerCodigosUsados();
-      if (codigosUsados.includes(cod)) {
-        alert(`⚠️ El código ${cod} ya fue activado en este dispositivo y ha sido consumido. Solicitá un nuevo pase por WhatsApp.`);
-        document.getElementById("input-codigo").value = "";
+      let usados = JSON.parse(localStorage.getItem('codigos_usados_registrados') || '[]');
+
+      if (usados.includes(cod)) {
+        alert("⚠️ El código " + cod + " ya fue activado en este dispositivo y fue consumido. Solicitá un nuevo pase por WhatsApp.");
         return;
       }
 
       if (CODIGOS_VALIDOS_OFICIALES.includes(cod)) {
+        usados.push(cod);
+        localStorage.setItem('codigos_usados_registrados', JSON.stringify(usados));
         creditos += 12;
-        codigosUsados.push(cod);
-        localStorage.setItem('codigos_usados_registrados', JSON.stringify(codigosUsados));
         actualizarCreditosUI();
-        alert(`✅ ¡Pase Activado con Éxito!\n\nCódigo: ${cod}\nSe acreditaron 12 días de rutinas personalizadas.\n(Nota: Este código fue consumido en este dispositivo).`);
+        alert("✅ ¡Pase Activado con Éxito!\n\nCódigo: " + cod + "\nSe acreditaron 12 días de rutinas personalizadas.");
         document.getElementById("input-codigo").value = "";
         cerrarModalPago();
       } else {
-        alert("❌ Código no válido o ya expirado. Contactate por WhatsApp para recibir tu pase de 12 días.");
+        alert("Código no válido. Consultanos por WhatsApp.");
       }
     }
 
@@ -855,6 +987,7 @@
       window.open(`https://wa.me/${TELEFONO_WHATSAPP}?text=Hola!%20Envio%20comprobante%20para%20activar%20mi%20pase%20de%2012%20rutinas%20diarias`, "_blank"); 
     }
 
+    // Inicializamos interfaz con créditos guardados
     actualizarCreditosUI();
   </script>
 </body>
