@@ -28,32 +28,6 @@
       box-shadow: 0 4px 20px rgba(56, 189, 248, 0.1);
     }
     .creditos-info { font-size: 14px; color: #f1f5f9; display: flex; align-items: center; gap: 10px; }
-
-    .lang-toggle-container {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: #0f172a;
-      border: 1px solid #334155;
-      padding: 4px;
-      border-radius: 20px;
-    }
-    .lang-btn {
-      background: transparent;
-      color: #94a3b8;
-      border: none;
-      padding: 4px 10px;
-      border-radius: 14px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .lang-btn.active {
-      background: #0284c7;
-      color: #ffffff;
-    }
-
     .creditos-badge {
       background: #0284c7;
       color: #ffffff;
@@ -344,29 +318,21 @@
 
   <div class="container">
     <header>
-      <h1 id="app-title">ENTRENA PRO</h1>
-      <p class="subtitle" id="app-subtitle">Generador de Rutinas Diarias Personalizadas & Biomecánicas</p>
+      <h1>ENTRENA PRO</h1>
+      <p class="subtitle">Generador de Rutinas Diarias Personalizadas & Biomecánicas</p>
     </header>
 
-    
     <div class="membresia-bar">
       <div class="creditos-info">
-        <span id="lbl-estado-pase">🎯 Estado del Pase:</span>
+        🎯 <span>Estado del Pase:</span>
         <span class="creditos-badge cero" id="creditos-display">🔒 0 / 12 Días Disponibles (Pase Bloqueado)</span>
       </div>
-      <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
-        <div class="lang-toggle-container">
-          <button class="lang-btn active" id="lang-btn-es" onclick="cambiarIdioma('es')">🇪🇸 ES</button>
-          <button class="lang-btn" id="lang-btn-en" onclick="cambiarIdioma('en')">🇺🇸 EN</button>
-        </div>
-        <button class="btn-cargar" id="btn-adquirir-pase" onclick="abrirModalPago()">💳 Adquirir Pase ($15.000)</button>
-      </div>
+      <button class="btn-cargar" onclick="abrirModalPago()">💳 Adquirir Pase ($15.000)</button>
     </div>
-
 
     <div class="control-panel">
       <div class="form-group">
-        <label for="lugar" id="lbl-lugar">📍 Entorno de Entrenamiento</label>
+        <label for="lugar">📍 Entorno de Entrenamiento</label>
         <select id="lugar">
           <option value="gimnasio">Gimnasio Completo (Máquinas/Pesas)</option>
           <option value="casa">En Casa (Mancuernas / Peso Corporal)</option>
@@ -375,7 +341,7 @@
       </div>
 
       <div class="form-group">
-        <label for="enfoque-dia" id="lbl-enfoque">🎯 Enfoque Muscular del Día</label>
+        <label for="enfoque-dia">🎯 Enfoque Muscular del Día</label>
         <select id="enfoque-dia">
           <option value="piernas">TREN INFERIOR (Piernas, Glúteos, Pantorrillas)</option>
           <option value="empuje">EMPUJE (Pecho, Hombro, Tríceps)</option>
@@ -386,7 +352,7 @@
       </div>
 
       <div class="form-group">
-        <label for="metodo-combo" id="lbl-metodo">⚙️ Método de Combinación</label>
+        <label for="metodo-combo">⚙️ Método de Combinación</label>
         <select id="metodo-combo">
           <option value="rondas">Rondas Biomecánicas (Fuerza + Pliometría + Detalle)</option>
           <option value="biseries">Biseries / Superseries Sinergistas (Mismo Grupo)</option>
@@ -396,7 +362,7 @@
       </div>
 
       <div class="form-group">
-        <label for="objetivo" id="lbl-objetivo">💪 Objetivo Principal</label>
+        <label for="objetivo">💪 Objetivo Principal</label>
         <select id="objetivo">
           <option value="hipertrofia">Hipertrofia y Definición Muscular</option>
           <option value="fuerza">Fuerza Máxima y Potencia</option>
@@ -404,13 +370,13 @@
         </select>
       </div>
 
-      <button class="btn-generar" id="btn-generar-rutina" onclick="generarRutinaDiaria()">⚡ Generar Rutina del Día</button>
+      <button class="btn-generar" onclick="generarRutinaDiaria()">⚡ Generar Rutina del Día</button>
     </div>
 
     <div class="rutina-container" id="rutina-panel">
       <div id="contenedor-bloques"></div>
       <div class="acciones-bar">
-        <button class="btn-pdf" id="btn-exportar-pdf" onclick="exportarPDFConCredito()">📄 Exportar o Imprimir Rutina en PDF</button>
+        <button class="btn-pdf" onclick="exportarPDFConCredito()">📄 Exportar o Imprimir Rutina en PDF</button>
       </div>
     </div>
   </div>
@@ -424,10 +390,10 @@
         Obtené tu Pase completo por solo <span class="precio-badge">$15.000 ARS</span>. Incluye 12 generaciones completas de rutinas sin censura, acceso a todos los métodos y exportación a PDF.
       </div>
 
-      <button class="btn-mp" id="btn-pagar-mp" onclick="pagarConTarjeta()">💳 Pagar con Tarjeta (Mercado Pago Directo)</button>
+      <button class="btn-mp" onclick="pagarConTarjeta()">💳 Pagar con Tarjeta (Mercado Pago Directo)</button>
 
       <div class="box-alias">
-        <span class="alias-titulo" id="lbl-transf-titulo">📲 Transferencia Directa (CBU / CVU / Alias):</span>
+        <span class="alias-titulo">📲 Transferencia Directa (CBU / CVU / Alias):</span>
         <select id="select-cuenta" class="select-cuenta" onchange="cambiarCuenta()">
           <option value="0">Mercado Pago (rmpc.mp)</option>
           <option value="1">Brubank (rmpc.br)</option>
@@ -439,18 +405,18 @@
         <div style="font-size:12px;"><strong>Alias:</strong> <span id="texto-alias" style="color:#eab308; font-weight:700;">rmpc.mp</span></div>
         <div style="font-size:12px;"><strong>CBU/CVU:</strong> <span id="texto-cbu" style="font-size:11px; color:#cbd5e1;">0000003100022063714580</span></div>
         <div class="alias-copiar-group">
-          <button class="btn-copiar" id="btn-copiar-alias" onclick="copiarAlias()">📋 Copiar Alias</button>
-          <button class="btn-copiar" id="btn-copiar-cbu" onclick="copiarCBU()">📋 Copiar CBU/CVU</button>
+          <button class="btn-copiar" onclick="copiarAlias()">📋 Copiar Alias</button>
+          <button class="btn-copiar" onclick="copiarCBU()">📋 Copiar CBU/CVU</button>
         </div>
       </div>
 
-      <button class="btn-wsp" id="btn-contactar-wsp" onclick="contactarWhatsApp()">💬 Enviar Comprobante / WhatsApp Directo</button>
+      <button class="btn-wsp" onclick="contactarWhatsApp()">💬 Enviar Comprobante / WhatsApp Directo</button>
 
       <div class="box-codigo">
-        <span class="alias-titulo" id="lbl-codigo-titulo">🔑 ¿Ya compraste tu pase? Activalo con tu código:</span>
+        <span class="alias-titulo">🔑 ¿Ya compraste tu pase? Activalo con tu código:</span>
         <div class="input-codigo-group">
-          <input type="text" id="input-codigo" placeholder="Ej: EP-...." style="text-transform:uppercase;">
-          <button class="btn-activar" id="btn-activar-codigo" onclick="activarCodigo()">Activar Pase</button>
+          <input type="text" id="input-codigo" placeholder="Ej: EP-xxxx" style="text-transform:uppercase;">
+          <button class="btn-activar" onclick="activarCodigo()">Activar Pase</button>
         </div>
       </div>
     </div>
@@ -466,237 +432,61 @@
       { banco: "Claro Pay", titular: "Leonardo Javier Pamelin", alias: "rutinas.clpay", cbu: "0000085700203995465335" }
     ];
 
-    let currentLang = localStorage.getItem('app_lang') || 'es';
-
-    const i18n = {
-      es: {
-        appTitle: "ENTRENA PRO",
-        appSubtitle: "Generador de Rutinas Diarias Personalizadas & Biomecánicas",
-        estadoPase: "🎯 Estado del Pase:",
-        badgeCero: "🔒 0 / 12 Días Disponibles (Pase Bloqueado)",
-        badgeActivo: "🎯 {n} / 12 Días Disponibles",
-        btnCargar: "💳 Adquirir Pase ($15.000)",
-        lblLugar: "📍 Entorno de Entrenamiento",
-        lblEnfoque: "🎯 Enfoque Muscular del Día",
-        lblMetodo: "⚙️ Método de Combinación",
-        lblObjetivo: "💪 Objetivo Principal",
-        btnGenerar: "⚡ Generar Rutina del Día",
-        btnPdf: "📄 Exportar o Imprimir Rutina en PDF",
-        modalTitulo: "💳 Pase de 12 Rutinas Personalizadas",
-        modalTexto: 'Obtené tu Pase completo por solo <span class="precio-badge">$15.000 ARS</span>. Incluye 12 generaciones completas de rutinas sin censura, acceso a todos los métodos y exportación a PDF.',
-        btnMp: "💳 Pagar con Tarjeta (Mercado Pago Directo)",
-        lblTransf: "📲 Transferencia Directa (CBU / CVU / Alias):",
-        btnCopiarAlias: "📋 Copiar Alias",
-        btnCopiarCbu: "📋 Copiar CBU/CVU",
-        btnWsp: "💬 Enviar Comprobante / WhatsApp Directo",
-        lblCodigo: "🔑 ¿Ya compraste tu pase? Activalo con tu código:",
-        placeholderCodigo: "Ej: EP-....",
-        btnActivar: "Activar Pase",
-        
-        optLugarGimnasio: "Gimnasio Completo (Máquinas/Pesas)",
-        optLugarCasa: "En Casa (Mancuernas / Peso Corporal)",
-        optLugarPlaza: "Plaza / Calistenia (Barra / Peso Corporal)",
-        
-        optEnfoquePiernas: "TREN INFERIOR (Piernas, Glúteos, Pantorrillas)",
-        optEnfoqueEmpuje: "EMPUJE (Pecho, Hombro, Tríceps)",
-        optEnfoqueTiron: "TIRÓN (Espalda, Bíceps, Hombro Posterior)",
-        optEnfoqueCoreHombros: "HOMBROS Y CORE",
-        optEnfoqueFullbody: "FULLBODY (Cuerpo Completo)",
-        
-        optMetodoRondas: "Rondas Biomecánicas (Fuerza + Pliometría + Detalle)",
-        optMetodoBiseries: "Biseries / Superseries Sinergistas (Mismo Grupo)",
-        optMetodoHiit: "Circuito HIIT / Quemagrasa por Tiempo (40s x 20s)",
-        optMetodoPiramidal: "Carga Piramidal Pesada (12 - 10 - 8 - 6 reps)",
-        
-        optObjetivoHipertrofia: "Hipertrofia y Definición Muscular",
-        optObjetivoFuerza: "Fuerza Máxima y Potencia",
-        optObjetivoResistencia: "Resistencia & Quema de Grasa",
-
-        rutinaDelDia: "🗓️ RUTINA DEL DÍA",
-        metodoActivo: "⚙️ Método Activo",
-        previewBanner: "🔒 <strong>Vista Previa Gratuita:</strong> La Fase 1 de calentamiento está libre. La Fase 2 (Rondas 1 y 2) y Fase 3 están censuradas.",
-        btnDesbloquearBanner: "🔓 Desbloquear Pase ($15.000)",
-        fase1Titulo: "🔥 FASE 1: Calentamiento Dinámico & Activación Cardio (Intensidad Moderada - 10 min)",
-        fase1Enfoque: "Calentamiento activo",
-        overlayTitulo: "🔒 Contenido Bloqueado - Pase de 12 Días Agotado",
-        overlayTexto: "Comprá tu Pase ($15.000) para desbloquear las 2 Rondas Principales y el Finisher.",
-        overlayBtn: "Desbloquear con $15.000",
-        
-        ronda1TituloBase: "🏋️ FASE 2 - RONDA 1: Fuerza Base y Potencia Dinámica",
-        ronda1TituloBiseries: "⚡ FASE 2 - RONDA 1: Biserie / Superserie Sinergista de",
-        ronda1TituloHiit: "🔥 FASE 2 - RONDA 1: Circuito HIIT de",
-        ronda1TituloPiramidal: "🏋️ FASE 2 - RONDA 1: Piramidal Pesado de",
-        
-        rol1: "1. Fuerza Compuesta Principal",
-        rol2: "2. Potencia / Unilateral",
-        rol3: "3. Trabajo Complementario",
-        
-        ronda2TituloBase: "⚡ FASE 2 - RONDA 2: Aislamiento y Enfoque Analítico",
-        ronda2TituloBiseries: "⚡ FASE 2 - RONDA 2: Biserie 2 de Aislamiento de",
-        ronda2TituloHiit: "🔥 FASE 2 - RONDA 2: Circuito HIIT Metabólico de",
-        ronda2TituloPiramidal: "🏋️ FASE 2 - RONDA 2: Piramidal de Aislamiento e Hipertrofia",
-        
-        rol2_1: "1. Aislamiento / Enfocado",
-        rol2_2: "2. Agilidad / Unilateral",
-        rol2_3: "3. Detalle Muscular",
-        
-        fase3Titulo: "🧘 FASE 3: Finisher Aeróbico & Vuelta a la Calma (5 min)",
-        fase3Enfoque: "VUELTA A LA CALMA",
-        
-        confirmarConsumo: "⚡ Generar esta rutina consumirá 1 crédito de tu pase (Te quedan {c} disponibles). ¿Deseas continuar?"
-      },
-      en: {
-        appTitle: "WORKOUT PRO",
-        appSubtitle: "Personalized Biomechanical Daily Workout Generator",
-        estadoPase: "🎯 Pass Status:",
-        badgeCero: "🔒 0 / 12 Days Available (Pass Locked)",
-        badgeActivo: "🎯 {n} / 12 Days Available",
-        btnCargar: "💳 Get Pass ($15.000 ARS)",
-        lblLugar: "📍 Workout Environment",
-        lblEnfoque: "🎯 Muscle Group Focus",
-        lblMetodo: "⚙️ Combination Method",
-        lblObjetivo: "💪 Main Objective",
-        btnGenerar: "⚡ Generate Daily Workout",
-        btnPdf: "📄 Export or Print Workout PDF",
-        modalTitulo: "💳 12-Workout Personalized Pass",
-        modalTexto: 'Get your full Pass for <span class="precio-badge">$15.000 ARS</span>. Includes 12 full uncensored workout generations, access to all methods, and PDF export.',
-        btnMp: "💳 Pay with Card (Direct Mercado Pago)",
-        lblTransf: "📲 Direct Bank Transfer (CBU / CVU / Alias):",
-        btnCopiarAlias: "📋 Copy Alias",
-        btnCopiarCbu: "📋 Copy CBU/CVU",
-        btnWsp: "💬 Send Payment Proof / Direct WhatsApp",
-        lblCodigo: "🔑 Already bought your pass? Activate code:",
-        placeholderCodigo: "E.g.: EP-2971",
-        btnActivar: "Activate Pass",
-        
-        optLugarGimnasio: "Full Gym (Machines / Weights)",
-        optLugarCasa: "At Home (Dumbbells / Bodyweight)",
-        optLugarPlaza: "Outdoor Park / Calisthenics (Bar / Bodyweight)",
-        
-        optEnfoquePiernas: "LOWER BODY (Legs, Glutes, Calves)",
-        optEnfoqueEmpuje: "PUSH (Chest, Shoulders, Triceps)",
-        optEnfoqueTiron: "PULL (Back, Biceps, Rear Delts)",
-        optEnfoqueCoreHombros: "SHOULDERS & CORE",
-        optEnfoqueFullbody: "FULLBODY (Full Body)",
-        
-        optMetodoRondas: "Biomechanical Rounds (Strength + Power + Detail)",
-        optMetodoBiseries: "Synergistic Supersets (Same Muscle Group)",
-        optMetodoHiit: "HIIT Circuit / Timed Fat Burn (40s x 20s)",
-        optMetodoPiramidal: "Heavy Pyramidal Load (12 - 10 - 8 - 6 reps)",
-        
-        optObjetivoHipertrofia: "Hypertrophy & Muscle Definition",
-        optObjetivoFuerza: "Maximal Strength & Power",
-        optObjetivoResistencia: "Endurance & Fat Loss",
-
-        rutinaDelDia: "🗓️ DAILY WORKOUT",
-        metodoActivo: "⚙️ Active Method",
-        previewBanner: "🔒 <strong>Free Preview:</strong> Phase 1 warm-up is free. Phase 2 (Rounds 1 & 2) and Phase 3 are locked.",
-        btnDesbloquearBanner: "🔓 Unlock Pass ($15.000 ARS)",
-        fase1Titulo: "🔥 PHASE 1: Dynamic Warm-up & Cardio Activation (Moderate - 10 min)",
-        fase1Enfoque: "Active warm-up",
-        overlayTitulo: "🔒 Locked Content - 12-Day Pass Expired",
-        overlayTexto: "Purchase your Pass ($15.000 ARS) to unlock the 2 Main Rounds and Finisher.",
-        overlayBtn: "Unlock for $15.000 ARS",
-        
-        ronda1TituloBase: "🏋️ PHASE 2 - ROUND 1: Base Strength & Dynamic Power",
-        ronda1TituloBiseries: "⚡ PHASE 2 - ROUND 1: Synergistic Superset of",
-        ronda1TituloHiit: "🔥 PHASE 2 - ROUND 1: HIIT Circuit of",
-        ronda1TituloPiramidal: "🏋️ PHASE 2 - ROUND 1: Heavy Pyramid of",
-        
-        rol1: "1. Main Compound Strength",
-        rol2: "2. Power / Unilateral Work",
-        rol3: "3. Complementary Exercise",
-        
-        ronda2TituloBase: "⚡ PHASE 2 - ROUND 2: Isolation & Analytical Focus",
-        ronda2TituloBiseries: "⚡ PHASE 2 - ROUND 2: Isolation Superset 2 of",
-        ronda2TituloHiit: "🔥 PHASE 2 - ROUND 2: Metabolic HIIT Circuit of",
-        ronda2TituloPiramidal: "🏋️ PHASE 2 - ROUND 2: Isolation & Hypertrophy Pyramid",
-        
-        rol2_1: "1. Isolation / Focused",
-        rol2_2: "2. Agility / Unilateral Work",
-        rol2_3: "3. Muscle Detail",
-        
-        fase3Titulo: "🧘 PHASE 3: Aerobic Finisher & Cool-down (5 min)",
-        fase3Enfoque: "COOL-DOWN",
-        
-        confirmarConsumo: "⚡ Generating this workout will consume 1 pass credit ({c} remaining). Continue?"
-      }
-    };
-
-    function cambiarIdioma(lang) {
-      currentLang = lang;
-      localStorage.setItem('app_lang', lang);
-      
-      document.getElementById('lang-btn-es').classList.toggle('active', lang === 'es');
-      document.getElementById('lang-btn-en').classList.toggle('active', lang === 'en');
-      
-      const t = i18n[lang];
-      
-      document.getElementById('app-title').innerText = t.appTitle;
-      document.getElementById('app-subtitle').innerText = t.appSubtitle;
-      document.getElementById('lbl-estado-pase').innerText = t.estadoPase;
-      document.getElementById('btn-adquirir-pase').innerText = t.btnCargar;
-      
-      document.getElementById('lbl-lugar').innerText = t.lblLugar;
-      document.getElementById('lbl-enfoque').innerText = t.lblEnfoque;
-      document.getElementById('lbl-metodo').innerText = t.lblMetodo;
-      document.getElementById('lbl-objetivo').innerText = t.lblObjetivo;
-      document.getElementById('btn-generar-rutina').innerText = t.btnGenerar;
-      document.getElementById('btn-exportar-pdf').innerText = t.btnPdf;
-      
-      document.getElementById('modal-titulo').innerText = t.modalTitulo;
-      document.getElementById('modal-texto').innerHTML = t.modalTexto;
-      document.getElementById('btn-pagar-mp').innerText = t.btnMp;
-      document.getElementById('lbl-transf-titulo').innerText = t.lblTransf;
-      document.getElementById('btn-copiar-alias').innerText = t.btnCopiarAlias;
-      document.getElementById('btn-copiar-cbu').innerText = t.btnCopiarCbu;
-      document.getElementById('btn-contactar-wsp').innerText = t.btnWsp;
-      document.getElementById('lbl-codigo-titulo').innerText = t.lblCodigo;
-      document.getElementById('input-codigo').placeholder = t.placeholderCodigo;
-      document.getElementById('btn-activar-codigo').innerText = t.btnActivar;
-
-      // Update select options
-      const selLugar = document.getElementById('lugar');
-      selLugar.options[0].text = t.optLugarGimnasio;
-      selLugar.options[1].text = t.optLugarCasa;
-      selLugar.options[2].text = t.optLugarPlaza;
-
-      const selEnfoque = document.getElementById('enfoque-dia');
-      selEnfoque.options[0].text = t.optEnfoquePiernas;
-      selEnfoque.options[1].text = t.optEnfoqueEmpuje;
-      selEnfoque.options[2].text = t.optEnfoqueTiron;
-      selEnfoque.options[3].text = t.optEnfoqueCoreHombros;
-      selEnfoque.options[4].text = t.optEnfoqueFullbody;
-
-      const selMetodo = document.getElementById('metodo-combo');
-      selMetodo.options[0].text = t.optMetodoRondas;
-      selMetodo.options[1].text = t.optMetodoBiseries;
-      selMetodo.options[2].text = t.optMetodoHiit;
-      selMetodo.options[3].text = t.optMetodoPiramidal;
-
-      const selObjetivo = document.getElementById('objetivo');
-      selObjetivo.options[0].text = t.optObjetivoHipertrofia;
-      selObjetivo.options[1].text = t.optObjetivoFuerza;
-      selObjetivo.options[2].text = t.optObjetivoResistencia;
-
-      actualizarCreditosUI();
-
-      // If workout panel is visible, re-generate to update language dynamically
-      const panel = document.getElementById('rutina-panel');
-      if (panel && panel.style.display === 'block') {
-        generarRutinaDiaria(true); // true = bypass credit deduction on language toggle
-      }
-    }
-
     const baseCalentamientoCardio = [
-      { id: "cal_01", name: "Jumping Jacks (Tijeras de salto)", name_en: "Jumping Jacks", category: "calentamiento", equipment: "body weight", target: "cardio_ligero", instructions: "Saltos coordinados abriendo y cerrando brazos y piernas a ritmo moderado.", instructions_en: "Coordinated jumps opening and closing arms and legs at a moderate pace.", repeticiones: "2 series x 45 segundos", repeticiones_en: "2 sets x 45 seconds" },
-      { id: "cal_02", name: "Rotaciones Articulares & Movilidad Dinámica", name_en: "Joint Rotations & Dynamic Mobility", category: "calentamiento", equipment: "body weight", target: "movilidad", instructions: "Círculos con hombros, rodillas y caderas para lubricar articulaciones.", instructions_en: "Circles with shoulders, knees, and hips to lubricate joints.", repeticiones: "2 series x 10 rotaciones por lado", repeticiones_en: "2 sets x 10 rotations per side" },
-      { id: "cal_03", name: "Skiping Bajo (Trote en el lugar)", name_en: "Low Skipping (Jogging in place)", category: "calentamiento", equipment: "body weight", target: "cardio_ligero", instructions: "Trote suave elevando ligeramente las rodillas sin golpear talones.", instructions_en: "Light jog raising knees slightly without landing heavy on heels.", repeticiones: "2 series x 40 segundos", repeticiones_en: "2 sets x 40 seconds" }
+      { id: "cal_01", name: "Jumping Jacks (Tijeras de salto)", category: "calentamiento", equipment: "body weight", target: "cardio_ligero", instructions: "Saltos coordinados abriendo y cerrando brazos y piernas a ritmo moderado.", repeticiones: "2 series x 45 segundos" },
+      { id: "cal_02", name: "Rotaciones Articulares & Movilidad Dinámica", category: "calentamiento", equipment: "body weight", target: "movilidad", instructions: "Círculos con hombros, rodillas y caderas para lubricar articulaciones.", repeticiones: "2 series x 10 rotaciones por lado" },
+      { id: "cal_03", name: "Skiping Bajo (Trote en el lugar)", category: "calentamiento", equipment: "body weight", target: "cardio_ligero", instructions: "Trote suave elevan ligeramente las rodillas sin golpear talones.", repeticiones: "2 series x 40 segundos" }
     ];
 
-    const baseFinisherRegenerativo = [
-      { id: "fin_01", name: "Caminata Regenerativa & Respiración Guiada", name_en: "Regenerative Walk & Guided Breathing", category: "finisher", equipment: "body weight", target: "cardio_baja", instructions: "Caminata suave inhalando profundo en 4 segundos y exhalando en 6.", instructions_en: "Gentle walk inhaling deeply for 4 seconds and exhaling for 6.", repeticiones: "3 minutos continuos", repeticiones_en: "3 continuous minutes" },
-      { id: "fin_02", name: "Estiramientos Estáticos Globales (Vuelta a la calma)", name_en: "Full Body Static Stretching (Cool-down)", category: "finisher", equipment: "body weight", target: "flexibilidad", instructions: "Mantené cada estiramiento de piernas, torso y brazos por 20 segundos sin rebotar.", instructions_en: "Hold each leg, torso, and arm stretch for 20 seconds without bouncing.", repeticiones: "2 minutos de flexibilidad", repeticiones_en: "2 minutes of flexibility" }
+    
+    const baseConsejosSalud = [
+      {
+        titulo_es: "🥗 Nutrición & Proteínas para Recuperación Muscular",
+        titulo_en: "🥗 Nutrition & Protein for Muscle Recovery",
+        texto_es: "Para reparar y desarrollar masa muscular, consumí entre 1.6g y 2.2g de proteína por kg de peso corporal al día (huevos, carnes magras, pescado, legumbres o proteína en polvo).",
+        texto_en: "To repair and build muscle, consume between 1.6g and 2.2g of protein per kg of body weight daily (eggs, lean meats, fish, legumes, or protein powder)."
+      },
+      {
+        titulo_es: "💧 Hidratación & Rendimiento Biomecánico",
+        titulo_en: "💧 Hydration & Biomechanical Performance",
+        texto_es: "Bebé entre 2.5 y 3.5 litros de agua diarios. En días de entrenamiento intenso, sumá electrolitos (sodio, potasio, magnesio) para prevenir tirones y fatiga muscular.",
+        texto_en: "Drink 2.5 to 3.5 liters of water daily. On intense training days, add electrolytes (sodium, potassium, magnesium) to prevent cramps and muscle fatigue."
+      },
+      {
+        titulo_es: "❤️ Salud Cardíaca & Prevención Cardiovascular",
+        titulo_en: "❤️ Heart Health & Cardiovascular Prevention",
+        texto_es: "El entrenamiento combinado de fuerza y cardio fortalece el músculo cardíaco, reduce la presión arterial y disminuye el colesterol LDL (malo).",
+        texto_en: "Combined strength and cardio training strengthens the heart muscle, lowers blood pressure, and reduces LDL (bad) cholesterol."
+      },
+      {
+        titulo_es: "🩸 Sensibilidad a la Insulina & Control de Glucosa",
+        titulo_en: "🩸 Insulin Sensitivity & Glucose Control",
+        texto_es: "Mover los músculos activa los receptores GLUT-4, ayudando a controlar la glucosa en sangre de forma natural y reduciendo el riesgo de diabetes Tipo 2.",
+        texto_en: "Muscle contraction activates GLUT-4 receptors, helping control blood glucose naturally and lowering the risk of Type 2 diabetes."
+      },
+      {
+        titulo_es: "🦴 Densidad Ósea & Antienvejecimiento",
+        titulo_en: "🦴 Bone Density & Anti-Aging",
+        texto_es: "El entrenamiento con cargas genera tensión mecánica en los huesos, estimulando la densidad ósea y previniendo la osteopenia y osteoporosis a futuro.",
+        texto_en: "Resistance training generates mechanical tension on bones, stimulating bone density and preventing future osteopenia and osteoporosis."
+      },
+      {
+        titulo_es: "🧠 Salud Mental, Estrés & Neuroplasticidad",
+        titulo_en: "🧠 Mental Health, Stress & Neuroplasticity",
+        texto_es: "El ejercicio estimula la liberación de BDNF (Factor Neurotrófico Derivado del Cerebro) y endorfinas, reduciendo drásticamente la ansiedad, el estrés y mejorando el enfoque.",
+        texto_en: "Exercise stimulates BDNF release (Brain-Derived Neurotrophic Factor) and endorphins, drastically reducing anxiety, stress, and improving focus."
+      },
+      {
+        titulo_es: "😴 Sueño Profundo & Síntesis Proteica",
+        titulo_en: "😴 Deep Sleep & Protein Synthesis",
+        texto_es: "El músculo no crece en el gimnasio, sino durante el sueño profundo. Procurá dormir de 7 a 8 horas para optimizar la liberación de hormona de crecimiento (GH).",
+        texto_en: "Muscle grows during deep sleep, not in the gym. Aim for 7-8 hours of sleep to optimize human growth hormone (HGH) release."
+      }
+    ];
+
+const baseFinisherRegenerativo = [
+      { id: "fin_01", name: "Caminata Regenerativa & Respiración Guiada", category: "finisher", equipment: "body weight", target: "cardio_baja", instructions: "Caminata suave inhalando profundo en 4 segundos y exhalando en 6.", repeticiones: "3 minutos continuos" },
+      { id: "fin_02", name: "Estiramientos Estáticos Globales (Vuelta a la calma)", category: "finisher", equipment: "body weight", target: "flexibilidad", instructions: "Mantené cada estiramiento de piernas, torso y brazos por 20 segundos sin rebotar.", repeticiones: "2 minutos de flexibilidad" }
     ];
 
     function obtenerDataset() {
@@ -704,32 +494,31 @@
         return window.ejerciciosDB;
       }
       return [
-        { id: "0001", name: "Flexiones de Pecho (Push-ups)", name_en: "Push-ups", category: "chest", equipment: "body weight", target: "pectorals", instructions: "Manos al ancho de hombros. Bajá el cuerpo rígido controlando la bajada.", instructions_en: "Hands shoulder-width apart. Lower body rigidly with control." },
-        { id: "0002", name: "Press de Banca Plano con Barra", name_en: "Barbell Bench Press", category: "chest", equipment: "barbell", target: "pectorals", instructions: "Espalda apoyada en banco, bajá la barra al esternón y empujá.", instructions_en: "Back flat on bench, lower bar to sternum and press up." },
-        { id: "0003", name: "Dominadas Pronas (Pull-ups)", name_en: "Pull-ups", category: "back", equipment: "body weight", target: "lats", instructions: "Traccioná con dorsales hasta superar la barra con la barbilla.", instructions_en: "Pull up with lats until chin passes over the bar." },
-        { id: "0005", name: "Sentadillas Libres Profundas", name_en: "Deep Bodyweight Squats", category: "upper legs", equipment: "body weight", target: "quadriceps", instructions: "Flexioná cadera y rodillas rompiendo los 90° con espalda erguida.", instructions_en: "Flex hips and knees below 90 degrees with upright posture." },
-        { id: "0006", name: "Hip Thrust con Barra/Pesas", name_en: "Barbell Hip Thrust", category: "gluteos", equipment: "barbell", target: "glutes", instructions: "Empujá con talones elevando cadera hasta apretar glúteos arriba.", instructions_en: "Drive through heels raising hips until squeezing glutes at top." },
-        { id: "0007", name: "Sentadilla Hack", name_en: "Hack Squat", category: "upper legs", equipment: "machine", target: "quadriceps", instructions: "Espalda apoyada en respaldo inclinado, bajá a 90° y empujá con talones.", instructions_en: "Back against pad, squat to 90 degrees and press with heels." },
-        { id: "0008", name: "Sentadillas Búlgaras con Mancuernas", name_en: "Dumbbell Bulgarian Split Squats", category: "upper legs", equipment: "dumbbell", target: "quadriceps / glutes", instructions: "Un pie elevado atrás en banco. Bajá la rodilla trasera casi al suelo.", instructions_en: "Rear foot elevated on bench. Lower back knee close to floor." },
-        { id: "0009", name: "Peso Muerto Rumano", name_en: "Romanian Deadlift", category: "upper legs", equipment: "barbell", target: "hamstrings", instructions: "Llevá la cadera atrás con rodillas semi-flexionadas sintiendo tirón en isquios.", instructions_en: "Hinge hips back with knees slightly bent feeling hamstring stretch." },
-        { id: "0010", name: "Prensa de Piernas Inclinada 45°", name_en: "45° Leg Press", category: "upper legs", equipment: "machine", target: "quadriceps", instructions: "Pies al ancho de hombros en plataforma. Bajá profundo a 90° sin descolgar cadera.", instructions_en: "Feet shoulder-width on platform. Lower deep to 90 degrees." },
-        { id: "0011", name: "Zancadas Caminando (Lunges)", name_en: "Walking Lunges", category: "upper legs", equipment: "dumbbell", target: "quadriceps", instructions: "Pasos largos al frente manteniendo torso erguido.", instructions_en: "Long strides forward keeping torso upright." },
-        { id: "0012", name: "Sentadilla Sumo con Pesa", name_en: "Sumo Dumbbell Squat", category: "upper legs", equipment: "dumbbell", target: "glutes / adductors", instructions: "Pies bien abiertos hacia afuera. Bajá vertical sintiendo trabajo en aductores y glúteos.", instructions_en: "Wide stance pointing feet out. Lower vertically engaging glutes." },
-        { id: "0013", name: "Elevaciones de Talón para Pantorrillas", name_en: "Calf Raises", category: "lower legs", equipment: "body weight", target: "calves", instructions: "Subí a máxima extensión de tobillos sosteniendo 1 segundo arriba.", instructions_en: "Raise onto toes holding maximum contraction for 1 second." }
+        { id: "0001", name: "Flexiones de Pecho (Push-ups)", category: "chest", equipment: "body weight", target: "pectorals", instructions: "Manos al ancho de hombros. Bajá el cuerpo rígido controlando la bajada." },
+        { id: "0002", name: "Press de Banca Plano con Barra", category: "chest", equipment: "barbell", target: "pectorals", instructions: "Espalda apoyada en banco, bajá la barra al esternón y empujá." },
+        { id: "0003", name: "Dominadas Pronas (Pull-ups)", category: "back", equipment: "body weight", target: "lats", instructions: "Traccioná con dorsales hasta superar la barra con la barbilla." },
+        { id: "0005", name: "Sentadillas Libres Profundas", category: "upper legs", equipment: "body weight", target: "quadriceps", instructions: "Flexioná cadera y rodillas rompiendo los 90° con espalda erguida." },
+        { id: "0006", name: "Hip Thrust con Barra/Pesas", category: "gluteos", equipment: "barbell", target: "glutes", instructions: "Empujá con talones elevando cadera hasta apretar glúteos arriba." },
+        { id: "0007", name: "Sentadilla Hack", category: "upper legs", equipment: "machine", target: "quadriceps", instructions: "Espalda apoyada en respaldo inclinado, bajá a 90° y empujá con talones." },
+        { id: "0008", name: "Sentadillas Búlgaras con Mancuernas", category: "upper legs", equipment: "dumbbell", target: "quadriceps / glutes", instructions: "Un pie elevado atrás en banco. Bajá la rodilla trasera casi al suelo." },
+        { id: "0009", name: "Peso Muerto Rumano", category: "upper legs", equipment: "barbell", target: "hamstrings", instructions: "Llevá la cadera atrás con rodillas semi-flexionadas sintiendo tirón en isquios." },
+        { id: "0010", name: "Prensa de Piernas Inclinada 45°", category: "upper legs", equipment: "machine", target: "quadriceps", instructions: "Pies al ancho de hombros en plataforma. Bajá profundo a 90° sin descolgar cadera." },
+        { id: "0011", name: "Zancadas Caminando (Lunges)", category: "upper legs", equipment: "dumbbell", target: "quadriceps", instructions: "Pasos largos al frente manteniendo torso erguido." },
+        { id: "0012", name: "Sentadilla Sumo con Pesa", category: "upper legs", equipment: "dumbbell", target: "glutes / adductors", instructions: "Pies bien abiertos hacia afuera. Bajá vertical sintiendo trabajo en aductores y glúteos." },
+        { id: "0013", name: "Elevaciones de Talón para Pantorrillas", category: "lower legs", equipment: "body weight", target: "calves", instructions: "Subí a máxima extensión de tobillos sosteniendo 1 segundo arriba." }
       ];
     }
 
     let creditos = parseInt(localStorage.getItem('creditos_rutina_dias'));
-    if (isNaN(creditos)) creditos = 0;
+    if (isNaN(creditos)) creditos = 0; // Inicio bloqueado para usuarios nuevos
 
     function actualizarCreditosUI() {
       const badge = document.getElementById('creditos-display');
-      const t = i18n[currentLang];
       if (creditos <= 0) {
-        badge.innerText = t.badgeCero;
+        badge.innerText = `🔒 0 / 12 Días Disponibles (Pase Bloqueado)`;
         badge.classList.add('cero');
       } else {
-        badge.innerText = t.badgeActivo.replace('{n}', creditos);
+        badge.innerText = `🎯 ${creditos} / 12 Días Disponibles`;
         badge.classList.remove('cero');
       }
       localStorage.setItem('creditos_rutina_dias', creditos);
@@ -750,17 +539,14 @@
     }
 
     function obtenerNombre(ej) {
-      if (!ej) return currentLang === 'en' ? "Workout Exercise" : "Ejercicio de Entrenamiento";
-      if (currentLang === 'en') {
-        return ej.name_en || ej.name || ej.nombre || "Custom Exercise";
-      }
+      if (!ej) return "Ejercicio de Entrenamiento";
       return ej.nombre || ej.name || "Ejercicio Personalizado";
     }
 
     function esMismoEjercicio(a, b) {
       if (!a || !b) return false;
-      const nameA = (a.name || a.nombre || "").trim().toLowerCase();
-      const nameB = (b.name || b.nombre || "").trim().toLowerCase();
+      const nameA = obtenerNombre(a).trim().toLowerCase();
+      const nameB = obtenerNombre(b).trim().toLowerCase();
       if (nameA && nameB && nameA === nameB) return true;
       if (a.id && b.id && String(a.id) === String(b.id)) return true;
       return false;
@@ -798,7 +584,7 @@
       const cat = String(ej.category || ej.musculo || "").toLowerCase();
       const target = String(ej.target || "").toLowerCase();
       const name = String(ej.name || ej.nombre || "").toLowerCase();
-      return cat.includes("leg") || cat.includes("glute") || target.includes("quad") || target.includes("glute") || target.includes("hamstring") || target.includes("calf") || name.includes("sentadilla") || name.includes("estocada") || name.includes("zancada") || name.includes("rumano") || name.includes("hack") || name.includes("sumo") || name.includes("hip thrust") || name.includes("prensa") || name.includes("búlgara") || name.includes("bulgara") || name.includes("pantorrilla") || name.includes("femoral") || name.includes("cuádriceps") || name.includes("squat") || name.includes("lunge") || name.includes("deadlift") || name.includes("press");
+      return cat.includes("leg") || cat.includes("glute") || target.includes("quad") || target.includes("glute") || target.includes("hamstring") || target.includes("calf") || name.includes("sentadilla") || name.includes("estocada") || name.includes("zancada") || name.includes("rumano") || name.includes("hack") || name.includes("sumo") || name.includes("hip thrust") || name.includes("prensa") || name.includes("búlgara") || name.includes("bulgara") || name.includes("pantorrilla") || name.includes("femoral") || name.includes("cuádriceps");
     }
 
     function esEjercicioPush(ej) {
@@ -806,7 +592,7 @@
       const cat = String(ej.category || ej.musculo || "").toLowerCase();
       const target = String(ej.target || "").toLowerCase();
       const name = String(ej.name || ej.nombre || "").toLowerCase();
-      return cat.includes("chest") || cat.includes("shoulder") || target.includes("pectoral") || target.includes("deltoid") || target.includes("triceps") || name.includes("press") || name.includes("flexion") || name.includes("fondo") || name.includes("push");
+      return cat.includes("chest") || cat.includes("shoulder") || target.includes("pectoral") || target.includes("deltoid") || target.includes("triceps") || name.includes("press") || name.includes("flexion") || name.includes("fondo");
     }
 
     function esEjercicioPull(ej) {
@@ -814,7 +600,7 @@
       const cat = String(ej.category || ej.musculo || "").toLowerCase();
       const target = String(ej.target || "").toLowerCase();
       const name = String(ej.name || ej.nombre || "").toLowerCase();
-      return cat.includes("back") || target.includes("lat") || target.includes("biceps") || target.includes("back") || target.includes("trap") || name.includes("remo") || name.includes("dominada") || name.includes("jalón") || name.includes("curl") || name.includes("pull") || name.includes("row");
+      return cat.includes("back") || target.includes("lat") || target.includes("biceps") || target.includes("back") || target.includes("trap") || name.includes("remo") || name.includes("dominada") || name.includes("jalón") || name.includes("curl");
     }
 
     function esEjercicioCore(ej) {
@@ -822,18 +608,11 @@
       const cat = String(ej.category || ej.musculo || "").toLowerCase();
       const target = String(ej.target || "").toLowerCase();
       const name = String(ej.name || ej.nombre || "").toLowerCase();
-      return cat.includes("waist") || target.includes("abs") || target.includes("oblique") || target.includes("core") || name.includes("plancha") || name.includes("crunch") || name.includes("plank");
+      return cat.includes("waist") || target.includes("abs") || target.includes("oblique") || target.includes("core") || name.includes("plancha") || name.includes("crunch");
     }
 
     function obtenerInstruccion(ej) {
-      if (!ej) return currentLang === 'en' ? "Guided technical execution with full range of motion." : "Ejecución técnica guiada con rango completo de movimiento.";
-      if (currentLang === 'en') {
-        if (ej.instructions_en) return ej.instructions_en;
-        if (ej.instructions) {
-          if (typeof ej.instructions === 'string') return ej.instructions;
-          if (Array.isArray(ej.instructions)) return ej.instructions.join(" ");
-        }
-      }
+      if (!ej) return "Ejecución técnica guiada con rango completo de movimiento.";
       if (ej.instructions) {
         if (typeof ej.instructions === 'string') return ej.instructions;
         if (ej.instructions.es) return Array.isArray(ej.instructions.es) ? ej.instructions.es.join(" ") : ej.instructions.es;
@@ -843,7 +622,7 @@
         if (typeof ej.instrucciones === 'string') return ej.instrucciones;
         if (ej.instrucciones.es) return ej.instrucciones.es;
       }
-      return currentLang === 'en' ? "Strict technique controlling both eccentric and concentric phases." : "Técnica estricta manteniendo control en la bajada y subida.";
+      return "Técnica estricta manteniendo control en la bajada y subida.";
     }
 
     function obtenerCategoria(ej) {
@@ -853,8 +632,8 @@
     }
 
     function obtenerEquipamiento(ej) {
-      if (!ej) return currentLang === 'en' ? "BODYWEIGHT" : "PESO CORPORAL";
-      const eq = ej.equipamiento || ej.equipment || (currentLang === 'en' ? "Bodyweight" : "Peso corporal");
+      if (!ej) return "PESO CORPORAL";
+      const eq = ej.equipamiento || ej.equipment || "Peso corporal";
       return String(eq).toUpperCase();
     }
 
@@ -865,23 +644,17 @@
       return "";
     }
 
-    function generarRutinaDiaria(esCambioIdioma = false) {
+    function generarRutinaDiaria() {
       let estaBloqueado = false;
-      const t = i18n[currentLang];
 
-      if (!esCambioIdioma) {
-        if (creditos <= 0) {
-          estaBloqueado = true;
-        } else {
-          const msgConfirm = t.confirmarConsumo.replace('{c}', creditos);
-          const confirmar = confirm(msgConfirm);
-          if (!confirmar) return;
-          creditos--;
-          actualizarCreditosUI();
-          estaBloqueado = false;
-        }
+      if (creditos <= 0) {
+        estaBloqueado = true;
       } else {
-        estaBloqueado = (creditos <= 0);
+        const confirmar = confirm(`⚡ Generar esta rutina consumirá 1 crédito de tu pase (Te quedan ${creditos} disponibles). ¿Deseas continuar?`);
+        if (!confirmar) return;
+        creditos--;
+        actualizarCreditosUI();
+        estaBloqueado = false;
       }
 
       const lugar = document.getElementById("lugar").value;
@@ -917,48 +690,44 @@
       diaBox.className = "dia-bloque";
 
       const nombresEnfoque = {
-        empuje: currentLang === 'en' ? "PUSH (Chest, Shoulders, Triceps)" : "EMPUJE (Pecho, Hombro, Tríceps)",
-        tiron: currentLang === 'en' ? "PULL (Back, Biceps, Rear Delts)" : "TIRÓN (Espalda, Bíceps, Hombro Posterior)",
-        piernas: currentLang === 'en' ? "LOWER BODY (Legs, Glutes, Calves)" : "TREN INFERIOR (Piernas, Glúteos, Pantorrillas)",
-        core_hombros: currentLang === 'en' ? "SHOULDERS & CORE" : "HOMBROS Y CORE",
-        fullbody: currentLang === 'en' ? "FULLBODY (Full Body)" : "FULLBODY (Cuerpo Completo)"
+        empuje: "EMPUJE (Pecho, Hombro, Tríceps)",
+        tiron: "TIRÓN (Espalda, Bíceps, Hombro Posterior)",
+        piernas: "TREN INFERIOR (Piernas, Glúteos, Pantorrillas)",
+        core_hombros: "HOMBROS Y CORE",
+        fullbody: "FULLBODY (Cuerpo Completo)"
       };
 
       const nombresMetodo = {
-        rondas: currentLang === 'en' ? "Biomechanical Rounds (Strength + Power + Detail)" : "Rondas Biomecánicas (Fuerza + Pliometría + Detalle)",
-        biseries: currentLang === 'en' ? "Synergistic Supersets (Same Muscle Group)" : "Biseries / Superseries Sinergistas (Mismo Grupo)",
-        hiit: currentLang === 'en' ? "HIIT Circuit / Timed Fat Burn (40s x 20s)" : "Circuito HIIT / Quemagrasa por Tiempo (40s x 20s)",
-        piramidal: currentLang === 'en' ? "Heavy Pyramidal Load (12 - 10 - 8 - 6 reps)" : "Carga Piramidal Pesada (12 - 10 - 8 - 6 reps)"
+        rondas: "Rondas Biomecánicas (Fuerza + Pliometría + Detalle)",
+        biseries: "Biseries / Superseries Sinergistas (Mismo Grupo)",
+        hiit: "Circuito HIIT / Quemagrasa por Tiempo (40s x 20s)",
+        piramidal: "Carga Piramidal Pesada (12 - 10 - 8 - 6 reps)"
       };
 
-      let htmlBloque = `<div class="dia-titulo">${t.rutinaDelDia}: ${nombresEnfoque[enfoqueDia]}</div>`;
-      htmlBloque += `<div style="font-size:12px; color:#38bdf8; margin-bottom:12px; font-weight:700;">${t.metodoActivo}: ${nombresMetodo[metodoCombo]} - (${lugar.toUpperCase()})</div>`;
+      let htmlBloque = `<div class="dia-titulo">🗓️ RUTINA DEL DÍA: ${nombresEnfoque[enfoqueDia]}</div>`;
+      htmlBloque += `<div style="font-size:12px; color:#38bdf8; margin-bottom:12px; font-weight:700;">⚙️ Método Activo: ${nombresMetodo[metodoCombo]} - (${lugar.toUpperCase()})</div>`;
       
       if (estaBloqueado) {
         htmlBloque += `
           <div style="background:#451a03; border:1px solid #f59e0b; color:#fef3c7; padding:12px 16px; border-radius:10px; margin-bottom:16px; font-size:13px; font-weight:600; text-align:center; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px;">
-            <span>${t.previewBanner}</span>
-            <button onclick="abrirModalPago()" style="background:#f59e0b; color:#0b0f19; border:none; padding:8px 14px; border-radius:6px; font-weight:800; cursor:pointer; font-size:12px;">${t.btnDesbloquearBanner}</button>
+            <span>🔒 <strong>Vista Previa Gratuita:</strong> La Fase 1 de calentamiento está libre. La Fase 2 (Rondas 1 y 2) y Fase 3 están censuradas.</span>
+            <button onclick="abrirModalPago()" style="background:#f59e0b; color:#0b0f19; border:none; padding:8px 14px; border-radius:6px; font-weight:800; cursor:pointer; font-size:12px;">🔓 Desbloquear Pase ($15.000)</button>
           </div>
         `;
       }
 
       // FASE 1: CALENTAMIENTO
-      htmlBloque += `<div class="subbloque-titulo bloque-calentamiento">${t.fase1Titulo}</div>`;
+      htmlBloque += `<div class="subbloque-titulo bloque-calentamiento">🔥 FASE 1: Calentamiento Dinámico & Activación Cardio (Intensidad Moderada - 10 min)</div>`;
       const calSeleccionados = seleccionarSinRepetir(baseCalentamientoCardio, 3, yaUsados);
       calSeleccionados.forEach(ej => {
-        const nombreEj = (currentLang === 'en' && ej.name_en) ? ej.name_en : ej.name;
-        const instEj = (currentLang === 'en' && ej.instructions_en) ? ej.instructions_en : ej.instructions;
-        const repsEj = (currentLang === 'en' && ej.repeticiones_en) ? ej.repeticiones_en : ej.repeticiones;
-        
         htmlBloque += `
           <div class="item-ejercicio">
             <div class="item-content">
-              <div class="item-nombre">${nombreEj}</div>
-              <div class="item-detalle">${currentLang === 'en' ? 'Focus:' : 'Enfoque:'} ${ej.target.toUpperCase()} | ${t.fase1Enfoque}</div>
-              <div class="item-guia">${instEj}</div>
+              <div class="item-nombre">${ej.name}</div>
+              <div class="item-detalle">Enfoque: ${ej.target.toUpperCase()} | Calentamiento activo</div>
+              <div class="item-guia">${ej.instructions}</div>
             </div>
-            <div class="item-series">${repsEj}</div>
+            <div class="item-series">${ej.repeticiones}</div>
           </div>
         `;
       });
@@ -967,34 +736,34 @@
         htmlBloque += `<div class="seccion-bloqueada">`;
         htmlBloque += `
           <div class="overlay-bloqueo" onclick="abrirModalPago()">
-            <h4>${t.overlayTitulo}</h4>
-            <p>${t.overlayTexto}</p>
-            <button class="btn-desbloquear-inline">${t.overlayBtn}</button>
+            <h4>🔒 Contenido Bloqueado - Pase de 12 Días Agotado</h4>
+            <p>Comprá tu Pase ($15.000) para desbloquear las 2 Rondas Principales y el Finisher.</p>
+            <button class="btn-desbloquear-inline">Desbloquear con $15.000</button>
           </div>
         `;
       }
 
       // FASE 2 - RONDA 1
-      let tituloRonda1 = `${t.ronda1TituloBase} (${nombresEnfoque[enfoqueDia]})`;
-      if (metodoCombo === "biseries") tituloRonda1 = `${t.ronda1TituloBiseries} ${nombresEnfoque[enfoqueDia]}`;
-      if (metodoCombo === "hiit") tituloRonda1 = `${t.ronda1TituloHiit} ${nombresEnfoque[enfoqueDia]} (40s x 20s)`;
-      if (metodoCombo === "piramidal") tituloRonda1 = `${t.ronda1TituloPiramidal} ${nombresEnfoque[enfoqueDia]} (12-10-8-6 reps)`;
+      let tituloRonda1 = `🏋️ FASE 2 - RONDA 1: Fuerza Base y Potencia Dinámica (${nombresEnfoque[enfoqueDia]})`;
+      if (metodoCombo === "biseries") tituloRonda1 = `⚡ FASE 2 - RONDA 1: Biserie / Superserie Sinergista de ${nombresEnfoque[enfoqueDia]}`;
+      if (metodoCombo === "hiit") tituloRonda1 = `🔥 FASE 2 - RONDA 1: Circuito HIIT de ${nombresEnfoque[enfoqueDia]} (40s x 20s)`;
+      if (metodoCombo === "piramidal") tituloRonda1 = `🏋️ FASE 2 - RONDA 1: Piramidal Pesado de ${nombresEnfoque[enfoqueDia]} (12-10-8-6 reps)`;
 
       htmlBloque += `<div class="subbloque-titulo bloque-ronda1">${tituloRonda1}</div>`;
       const ronda1Ejercicios = seleccionarSinRepetir(poolPrincipal, 3, yaUsados);
       ronda1Ejercicios.forEach((ej, index) => {
         const imgUrl = obtenerImagen(ej);
-        let rolStr = (index === 0) ? t.rol1 : ((index === 1) ? t.rol2 : t.rol3);
-        let seriesReps = (index === 0) ? (currentLang === 'en' ? "3-4 sets x 8-10 reps" : "3-4 series x 8-10 reps") : ((index === 1) ? (currentLang === 'en' ? "3-4 sets x 10-12 reps" : "3-4 series x 10-12 reps") : (currentLang === 'en' ? "3 sets x 12 reps" : "3 series x 12 reps"));
-        if (metodoCombo === "hiit") seriesReps = currentLang === 'en' ? "40s work x 20s rest (4 Rounds)" : "40s trabajo x 20s descanso (4 Rondas)";
-        if (metodoCombo === "piramidal") seriesReps = currentLang === 'en' ? "4 sets (12 - 10 - 8 - 6 reps)" : "4 series (12 - 10 - 8 - 6 reps)";
+        let rolStr = (index === 0) ? "1. Fuerza Compuesta Principal" : ((index === 1) ? "2. Potencia / Unilateral" : "3. Trabajo Complementario");
+        let seriesReps = (index === 0) ? "3-4 series x 8-10 reps" : ((index === 1) ? "3-4 series x 10-12 reps" : "3 series x 12 reps");
+        if (metodoCombo === "hiit") seriesReps = "40s trabajo x 20s descanso (4 Rondas)";
+        if (metodoCombo === "piramidal") seriesReps = "4 series (12 - 10 - 8 - 6 reps)";
 
         htmlBloque += `
           <div class="item-ejercicio">
             ${imgUrl ? `<img src="${imgUrl}" class="item-media" alt="ejercicio" onerror="this.style.display='none'">` : ''}
             <div class="item-content">
               <div class="item-nombre">${rolStr}: ${obtenerNombre(ej)}</div>
-              <div class="item-detalle">${currentLang === 'en' ? 'Group:' : 'Grupo:'} ${obtenerCategoria(ej)} | ${currentLang === 'en' ? 'Equipment:' : 'Equipo:'} ${obtenerEquipamiento(ej)}</div>
+              <div class="item-detalle">Grupo: ${obtenerCategoria(ej)} | Equipo: ${obtenerEquipamiento(ej)}</div>
               <div class="item-guia">${obtenerInstruccion(ej)}</div>
             </div>
             <div class="item-series">${seriesReps}</div>
@@ -1002,26 +771,26 @@
         `;
       });
 
-      // FASE 2 - RONDA 2
-      let tituloRonda2 = `${t.ronda2TituloBase} (${nombresEnfoque[enfoqueDia]})`;
-      if (metodoCombo === "biseries") tituloRonda2 = `${t.ronda2TituloBiseries} ${nombresEnfoque[enfoqueDia]}`;
-      if (metodoCombo === "hiit") tituloRonda2 = `${t.ronda2TituloHiit} ${nombresEnfoque[enfoqueDia]}`;
-      if (metodoCombo === "piramidal") tituloRonda2 = `${t.ronda2TituloPiramidal}`;
+      // FASE 2 - RONDA 2 (EXCLUYE TODOS LOS EJERCICIOS DE RONDA 1 Y FASE 1)
+      let tituloRonda2 = `⚡ FASE 2 - RONDA 2: Aislamiento y Enfoque Analítico (${nombresEnfoque[enfoqueDia]})`;
+      if (metodoCombo === "biseries") tituloRonda2 = `⚡ FASE 2 - RONDA 2: Biserie 2 de Aislamiento de ${nombresEnfoque[enfoqueDia]}`;
+      if (metodoCombo === "hiit") tituloRonda2 = `🔥 FASE 2 - RONDA 2: Circuito HIIT Metabólico de ${nombresEnfoque[enfoqueDia]}`;
+      if (metodoCombo === "piramidal") tituloRonda2 = `🏋️ FASE 2 - RONDA 2: Piramidal de Aislamiento e Hipertrofia`;
 
       htmlBloque += `<div class="subbloque-titulo bloque-ronda2">${tituloRonda2}</div>`;
       const ronda2Ejercicios = seleccionarSinRepetir(poolPrincipal, 3, yaUsados);
       ronda2Ejercicios.forEach((ej, index) => {
         const imgUrl = obtenerImagen(ej);
-        let rolStr = (index === 0) ? t.rol2_1 : ((index === 1) ? t.rol2_2 : t.rol2_3);
-        let seriesReps = currentLang === 'en' ? "3 sets x 12-15 reps" : "3 series x 12-15 reps";
-        if (metodoCombo === "hiit") seriesReps = currentLang === 'en' ? "40s work x 20s rest (3 Rounds)" : "40s trabajo x 20s descanso (3 Rondas)";
+        let rolStr = (index === 0) ? "1. Aislamiento / Enfocado" : ((index === 1) ? "2. Agilidad / Unilateral" : "3. Detalle Muscular");
+        let seriesReps = "3 series x 12-15 reps";
+        if (metodoCombo === "hiit") seriesReps = "40s trabajo x 20s descanso (3 Rondas)";
 
         htmlBloque += `
           <div class="item-ejercicio">
             ${imgUrl ? `<img src="${imgUrl}" class="item-media" alt="ejercicio" onerror="this.style.display='none'">` : ''}
             <div class="item-content">
               <div class="item-nombre">${rolStr}: ${obtenerNombre(ej)}</div>
-              <div class="item-detalle">${currentLang === 'en' ? 'Group:' : 'Grupo:'} ${obtenerCategoria(ej)} | ${currentLang === 'en' ? 'Equipment:' : 'Equipo:'} ${obtenerEquipamiento(ej)}</div>
+              <div class="item-detalle">Grupo: ${obtenerCategoria(ej)} | Equipo: ${obtenerEquipamiento(ej)}</div>
               <div class="item-guia">${obtenerInstruccion(ej)}</div>
             </div>
             <div class="item-series">${seriesReps}</div>
@@ -1030,23 +799,39 @@
       });
 
       // FASE 3: FINISHER
-      htmlBloque += `<div class="subbloque-titulo bloque-final">${t.fase3Titulo}</div>`;
+      htmlBloque += `<div class="subbloque-titulo bloque-final">🧘 FASE 3: Finisher Aeróbico & Vuelta a la Calma (5 min)</div>`;
       baseFinisherRegenerativo.forEach(ej => {
-        const nombreEj = (currentLang === 'en' && ej.name_en) ? ej.name_en : ej.name;
-        const instEj = (currentLang === 'en' && ej.instructions_en) ? ej.instructions_en : ej.instructions;
-        const repsEj = (currentLang === 'en' && ej.repeticiones_en) ? ej.repeticiones_en : ej.repeticiones;
-
         htmlBloque += `
           <div class="item-ejercicio">
             <div class="item-content">
-              <div class="item-nombre">${nombreEj}</div>
-              <div class="item-detalle">${currentLang === 'en' ? 'Focus:' : 'Enfoque:'} ${t.fase3Enfoque}</div>
-              <div class="item-guia">${instEj}</div>
+              <div class="item-nombre">${ej.name}</div>
+              <div class="item-detalle">Enfoque: VUELTA A LA CALMA</div>
+              <div class="item-guia">${ej.instructions}</div>
             </div>
-            <div class="item-series">${repsEj}</div>
+            <div class="item-series">${ej.repeticiones}</div>
           </div>
         `;
       });
+
+      // CONSEJOS DE SALUD, NUTRICIÓN Y BIENESTAR
+      let esIngles = (typeof idiomaActual !== 'undefined' && idiomaActual === 'en');
+      let titConsejos = esIngles ? '💡 HEALTH, NUTRITION & WELLNESS TIPS' : '💡 CONSEJOS DE SALUD, NUTRICIÓN Y BIENESTAR';
+      htmlBloque += `<div class="subbloque-titulo" style="background:#065f46; color:#a7f3d0; margin-top:18px;">${titConsejos}</div>`;
+      
+      const consejosSeleccionados = seleccionarSinRepetir(baseConsejosSalud, 2, []);
+      consejosSeleccionados.forEach(c => {
+        let t = esIngles ? c.titulo_en : c.titulo_es;
+        let d = esIngles ? c.texto_en : c.texto_es;
+        htmlBloque += `
+          <div class="item-ejercicio" style="border-left: 4px solid #10b981;">
+            <div class="item-content">
+              <div class="item-nombre" style="color:#a7f3d0;">${t}</div>
+              <div class="item-guia" style="color:#e2e8f0; font-style:normal; margin-top:4px; font-size:13px;">${d}</div>
+            </div>
+          </div>
+        `;
+      });
+
 
       if (estaBloqueado) {
         htmlBloque += `</div>`;
@@ -1060,10 +845,9 @@
     }
 
     function exportarPDFConCredito() {
-      const t = i18n[currentLang];
       if (creditos <= 0) {
-        document.getElementById('modal-titulo').innerText = t.modalTitulo;
-        document.getElementById('modal-texto').innerHTML = t.modalTexto;
+        document.getElementById('modal-titulo').innerText = "⚠️ Agotaste tus 12 Días de Rutina";
+        document.getElementById('modal-texto').innerHTML = "Llegaste al límite de tu pase. Cargá <strong>$15.000</strong> para renovar o contactanos por WhatsApp.";
         abrirModalPago();
         return;
       }
@@ -1081,12 +865,12 @@
 
     function copiarAlias() {
       const alias = document.getElementById("texto-alias").innerText;
-      navigator.clipboard.writeText(alias).then(() => { alert((currentLang === 'en' ? "Alias copied to clipboard!: " : "¡Alias copiado al portapapeles!: ") + alias); });
+      navigator.clipboard.writeText(alias).then(() => { alert("¡Alias copiado al portapapeles!: " + alias); });
     }
 
     function copiarCBU() {
       const cbu = document.getElementById("texto-cbu").innerText;
-      navigator.clipboard.writeText(cbu).then(() => { alert((currentLang === 'en' ? "CBU/CVU copied to clipboard!: " : "¡CBU/CVU copiado al portapapeles!: ") + cbu); });
+      navigator.clipboard.writeText(cbu).then(() => { alert("¡CBU/CVU copiado al portapapeles!: " + cbu); });
     }
 
     const CODIGOS_VALIDOS_OFICIALES = ["EP-2971", "EP-6254", "EP-9253", "EP-9405", "EP-2701", "EP-4678", "EP-7911", "EP-9062", "EP-8246", "EP-4951", "EP-1061", "EP-2342", "EP-2834", "EP-5726", "EP-2626", "EP-8387", "EP-1208", "EP-9052", "EP-6168", "EP-4464", "EP-7528", "EP-5140", "EP-6716", "EP-6863", "EP-7186", "EP-9434", "EP-2270", "EP-6597", "EP-2489", "EP-9835", "EP-5806", "EP-5732", "EP-8514", "EP-3328", "EP-6082", "EP-1425", "EP-7063", "EP-6976", "EP-8574", "EP-7937", "EP-2505", "EP-7553", "EP-9186", "EP-2927", "EP-7990", "EP-9316", "EP-9065", "EP-7543", "EP-9615", "EP-5257"];
@@ -1102,13 +886,13 @@
     function activarCodigo() {
       const cod = document.getElementById("input-codigo").value.trim().toUpperCase();
       if (!cod) {
-        alert(currentLang === 'en' ? "Please enter a valid access code." : "Por favor, ingresá un código de acceso válido.");
+        alert("Por favor, ingresá un código de acceso válido.");
         return;
       }
 
       const codigosUsados = obtenerCodigosUsados();
       if (codigosUsados.includes(cod)) {
-        alert(currentLang === 'en' ? `⚠️ Code ${cod} has already been activated on this device and consumed.` : `⚠️ El código ${cod} ya fue activado en este dispositivo y ha sido consumido. Solicitá un nuevo pase por WhatsApp.`);
+        alert(`⚠️ El código ${cod} ya fue activado en este dispositivo y ha sido consumido. Solicitá un nuevo pase por WhatsApp.`);
         document.getElementById("input-codigo").value = "";
         return;
       }
@@ -1118,18 +902,11 @@
         codigosUsados.push(cod);
         localStorage.setItem('codigos_usados_registrados', JSON.stringify(codigosUsados));
         actualizarCreditosUI();
-        alert(currentLang === 'en' ? `✅ Pass Activated Successfully!
-
-Code: ${cod}
-12 days of workouts credited.` : `✅ ¡Pase Activado con Éxito!
-
-Código: ${cod}
-Se acreditaron 12 días de rutinas personalizadas.
-(Nota: Este código fue consumido en este dispositivo).`);
+        alert(`✅ ¡Pase Activado con Éxito!\n\nCódigo: ${cod}\nSe acreditaron 12 días de rutinas personalizadas.\n(Nota: Este código fue consumido en este dispositivo).`);
         document.getElementById("input-codigo").value = "";
         cerrarModalPago();
       } else {
-        alert(currentLang === 'en' ? "❌ Invalid or expired code. Contact us on WhatsApp to receive your 12-day pass." : "❌ Código no válido o ya expirado. Contactate por WhatsApp para recibir tu pase de 12 días.");
+        alert("❌ Código no válido o ya expirado. Contactate por WhatsApp para recibir tu pase de 12 días.");
       }
     }
 
@@ -1141,12 +918,10 @@ Se acreditaron 12 días de rutinas personalizadas.
     }
     
     function contactarWhatsApp() { 
-      const msg = currentLang === 'en' ? "Hello!%20I%20am%20sending%20proof%20of%20payment%20to%20activate%20my%2012-day%20workout%20pass" : "Hola!%20Envio%20comprobante%20para%20activar%20mi%20pase%20de%2012%20rutinas%20diarias";
-      window.open(`https://wa.me/${TELEFONO_WHATSAPP}?text=${msg}`, "_blank"); 
+      window.open(`https://wa.me/${TELEFONO_WHATSAPP}?text=Hola!%20Envio%20comprobante%20para%20activar%20mi%20pase%20de%2012%20rutinas%20diarias`, "_blank"); 
     }
 
-    // Initialize UI language
-    cambiarIdioma(currentLang);
+    actualizarCreditosUI();
   </script>
 </body>
 </html>
