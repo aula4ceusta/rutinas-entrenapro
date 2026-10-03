@@ -109,7 +109,6 @@ window.ejerciciosDB = [
     { id: "cr06", es: "Sombra de boxeo", mus: "cardio", eq: "body weight", tipo: "Aeróbico", pasos: "Lance puñetazos al aire con desplazamientos laterales constantes." },
     { id: "cr07", es: "Salto a la comba (simulado)", mus: "cardio", eq: "body weight", tipo: "Aeróbico", pasos: "Saltos cortos rítmicos moviendo las muñecas." },
     { id: "cr08", es: "Burpees con flexión", mus: "cardio", eq: "body weight", tipo: "Aeróbico", pasos: "Añada una flexión completa de pecho al burpee tradicional." },
-      // --- PECHO (Chest) --- (Continuación desde c19)
     { id: "c19", es: "Press de pecho en máquina Hammer", mus: "chest", eq: "gym", tipo: "Fuerza", pasos: "Empuje frontal sentado en máquina de palanca convergente." },
     { id: "c20", es: "Aperturas en Peck Deck (Mariposa)", mus: "chest", eq: "gym", tipo: "Fuerza", pasos: "Sentado, junte los brazos frente al pecho manteniendo una ligera flexión de codos." },
     { id: "c21", es: "Press de banca inclinado con barra", mus: "chest", eq: "barbell", tipo: "Fuerza", pasos: "En banco a 45°, baje la barra a la parte superior del pecho." },
@@ -166,7 +165,7 @@ window.ejerciciosDB = [
     { id: "cr09", es: "Boxeo al aire con mancuernas livianas", mus: "cardio", eq: "dumbbell", tipo: "Aeróbico", pasos: "Lance golpes rítmicos sujetando pesas de 1-2 kg." },
     { id: "cr10", es: "Escaleras o Step rápido", mus: "cardio", eq: "body weight", tipo: "Aeróbico", pasos: "Suba y baje un escalón a máxima velocidad." },
     { id: "cr11", es: "Trote con talones al glúteo", mus: "cardio", eq: "body weight", tipo: "Aeróbico", pasos: "Carrera rítmica exagerando el movimiento de talones atrás." },
-     { id: "c27", es: "Aperturas en banco plano con mancuernas", mus: "chest", eq: "dumbbell", tipo: "Fuerza", pasos: "Abra los brazos en arco sintiendo el estiramiento del pectoral medio." },
+    { id: "c27", es: "Aperturas en banco plano con mancuernas", mus: "chest", eq: "dumbbell", tipo: "Fuerza", pasos: "Abra los brazos en arco sintiendo el estiramiento del pectoral medio." },
     { id: "c28", es: "Press inclinado con barra (agarre ancho)", mus: "chest", eq: "barbell", tipo: "Fuerza", pasos: "Enfoque en la porción clavicular del pecho para dar aspecto voluminoso." },
     { id: "c29", es: "Flexiones con manos elevadas (garrafas)", mus: "chest", eq: "body weight", tipo: "Fuerza", pasos: "Use dos garrafas como soporte para bajar más allá del nivel de las manos." },
     { id: "c30", es: "Cruce de poleas altas (enfocado a pecho inferior)", mus: "chest", eq: "cable", tipo: "Fuerza", pasos: "Tire de los cables hacia abajo y adelante cruzando las manos al final." },
@@ -695,7 +694,7 @@ window.ejerciciosDB = [
     { id: "cr37", es: "Sombras de boxeo con desplazamientos en L", mus: "cardio", eq: "body weight", tipo: "Aeróbico", pasos: "Combine golpes con movimientos de pies laterales y frontales constantes." },
     { id: "cr38", es: "Skipping bajo con palmada bajo muslo", mus: "cardio", eq: "body weight", tipo: "Aeróbico", pasos: "Carrera rápida en el sitio aplaudiendo bajo cada pierna que sube." },
     { id: "cr39", es: "Escalador en 'X' (rodilla a codo opuesto)", mus: "cardio", eq: "body weight", tipo: "Aeróbico", pasos: "En plancha, cruce las rodillas hacia el brazo contrario a gran velocidad." },
-        // --- PECHO (Chest) (c106 - c125) ---
+    // --- PECHO (Chest) (c106 - c125) ---
     { id: "c106", es: "Press de banca con mancuernas (unilateral)", mus: "chest", eq: "dumbbell", tipo: "Fuerza", pasos: "Trabaje un solo brazo para obligar al core a estabilizar el torso." },
     { id: "c107", es: "Flexiones en anillas (Rings push-ups)", mus: "chest", eq: "body weight", tipo: "Fuerza", pasos: "Inestabilidad máxima; mantenga las anillas paralelas y baje profundo." },
     { id: "c108", es: "Aperturas con poleas en banco plano", mus: "chest", eq: "cable", tipo: "Fuerza", pasos: "Tensión constante en el pectoral medio durante todo el recorrido del arco." },
