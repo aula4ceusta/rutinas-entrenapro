@@ -1,4 +1,4 @@
-const baseEjercicios = [
+window.ejerciciosDB = [
     // --- FUERZA (Piernas, Pecho, Espalda, Brazos) ---
     { id: "0043", es: "Sentadilla con Barra", mus: "upper legs", eq: "barbell", tipo: "Fuerza", pasos: "Barra en trapecios, baje cadera tras el paralelo." },
     { id: "0025", es: "Press de Banca", mus: "chest", eq: "barbell", tipo: "Fuerza", pasos: "Baje la barra al pecho y empuje explosivamente." },
